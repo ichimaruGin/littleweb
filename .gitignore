@@ -1,0 +1,8 @@
+bin
+target
+*.iml
+logs/
+build
+*.classpath
+*.project
+.settings/

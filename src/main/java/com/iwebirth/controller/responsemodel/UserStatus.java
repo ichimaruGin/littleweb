@@ -39,5 +39,9 @@ public class UserStatus implements Serializable {
 		this.alive = alive;
 	}
 	
-	
+	public UserStatus(String username,String level,boolean alive){
+		this.username = username;
+		this.level = level;
+		this.alive = alive;
+	}
 }

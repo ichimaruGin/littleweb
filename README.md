@@ -21,3 +21,9 @@
 *               noCompressionUserAgents="gozilla,traviata"
 *               compressableMimeType="text/html,text/xml,text/css,text/plain,text/javascript,application/x-javascript,application/javascript" />
 
+##登录
+*验证码
+*form.submit()-->controller-->ajax返回-->windown.location.reload
+*采用session保存 用户信息及用户登陆状态(UserStatus)
+*LoginResult转为json后作为登录验证ajax的返回值
+

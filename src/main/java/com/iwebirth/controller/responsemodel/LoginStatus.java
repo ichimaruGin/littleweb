@@ -2,12 +2,17 @@ package com.iwebirth.controller.responsemodel;
 
 import java.io.Serializable;
 
-public class UserStatus implements Serializable {
+public class LoginStatus implements Serializable {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 2930950783348870020L;
+	
+	public  static final String ADMIN = "admin";
+	public  static final String EV_SELLER = "ev_seller";
+	public  static final String EV_USER = "ev_user";
+	public static final String PEOPLE = "people";
 	
 	String username;
 	
@@ -39,7 +44,7 @@ public class UserStatus implements Serializable {
 		this.alive = alive;
 	}
 	
-	public UserStatus(String username,String level,boolean alive){
+	public LoginStatus(String username,String level,boolean alive){
 		this.username = username;
 		this.level = level;
 		this.alive = alive;

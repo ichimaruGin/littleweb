@@ -1,12 +1,12 @@
 package com.iwebirth.controller.responsemodel;
 
 import java.io.Serializable;
-
-public class LoginInfo implements Serializable{
-
 	/**
 	 * 
 	 */
+public class LoginInfo implements Serializable{
+
+
 	private static final long serialVersionUID = -1656082078045656966L;
 	
 	String username;

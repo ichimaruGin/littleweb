@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,25 +25,22 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.iwebirth.controller.responsemodel.Authcode;
 import com.iwebirth.controller.responsemodel.LoginInfo;
-import com.iwebirth.controller.responsemodel.LoginResult;
-import com.iwebirth.controller.responsemodel.UserStatus;
-import com.iwebirth.db.model.DefaultUser;
+import com.iwebirth.controller.responsemodel.LoginResponse;
+import com.iwebirth.controller.responsemodel.LoginStatus;
+import com.iwebirth.db.service.UserService;
 
 @Controller
 @RequestMapping("/login")
 public class LoginController {
 	
-	@RequestMapping(value="/test",method=RequestMethod.GET)
-	public 
-	@ResponseBody DefaultUser getSingleUser(HttpServletRequest request,HttpServletResponse response){
-		DefaultUser defaultUser = new DefaultUser("test", request.getRequestURI());
-		return defaultUser;
-	}	
+	@Autowired
+	UserService userService;
+	
 	@RequestMapping
 	public
 	ModelAndView index(HttpSession session,ModelMap model){
 		session.setMaxInactiveInterval(3600);
-		UserStatus status = (UserStatus)session.getAttribute("user_status");
+		LoginStatus status = (LoginStatus)session.getAttribute("login_status");
 		ModelAndView mav = new ModelAndView();
 		if(status != null && status.getAlive()){			
 			mav.setViewName("head");
@@ -55,31 +53,29 @@ public class LoginController {
 	
 	@RequestMapping("/check")
 	public
-	@ResponseBody LoginResult check(HttpSession session,HttpServletResponse response,LoginInfo loginInfo) throws IOException{
+	@ResponseBody LoginResponse check(HttpSession session,HttpServletResponse response,LoginInfo loginInfo) throws IOException{
 		session.setMaxInactiveInterval(3600);
-		UserStatus status = (UserStatus)session.getAttribute("user_status");
-		LoginResult loginResult = new LoginResult();
+		loginInfo.show();
+		LoginStatus status = (LoginStatus)session.getAttribute("login_status");
+		LoginResponse loginResponse = new LoginResponse();
 		if(status != null && status.getAlive()){	
 			//todo 根据UserStatus 的level 来确定返回到特定页面
-
+			String level = status.getLevel();
 		}else{
-			//首次登陆或者session失效
-			loginInfo.show();		
-			if(loginInfo.getAuthcode().equals((String)session.getAttribute("authcode"))){
-				System.out.println("验证码通过");				
-				loginResult.setUsername(loginInfo.getUsername());
-				loginResult.setResult("SUCCESS");
-				loginResult.setSuccess(true);
-				UserStatus userStatus = new UserStatus(loginInfo.getUsername(),"admin",true);
-				session.setAttribute("user_status", userStatus);
-				return loginResult;
+			//首次登陆或者session失效					
+			if(loginInfo.getAuthcode().equals((String)session.getAttribute("auth_code"))){
+				loginResponse = userService.checkUser(loginInfo);
+				if(loginResponse.getResult().equals(LoginResponse.SUCCESS)){  //login success
+					LoginStatus newStatus = new LoginStatus(loginResponse.getUsername(),loginResponse.getLevel(),true);
+					session.setAttribute("login_status", newStatus);
+				}
+				return loginResponse;
 			}else{				
-				loginResult.setUsername(loginInfo.getUsername());
-				loginResult.setResult("FAIL_AUTHCODE");
-				loginResult.setSuccess(true);
+				loginResponse.setUsername(loginInfo.getUsername());
+				loginResponse.setResult("FAIL_AUTHCODE");
 			}
 		}		
-		return loginResult;
+		return loginResponse;
 	}
 	
 	@RequestMapping(value="/authcode/{time}",method=RequestMethod.GET)
@@ -146,7 +142,7 @@ public class LoginController {
             randomCode.append(strRand);         
         }    
      // 将四位数字的验证码保存到Session中。              
-        session.setAttribute("authcode", randomCode.toString()); 
+        session.setAttribute("auth_code", randomCode.toString()); 
        // System.out.println("get an Authcode : "+randomCode.toString());
         // 禁止图像缓存。         
         response.setHeader("Pragma", "no-cache");         

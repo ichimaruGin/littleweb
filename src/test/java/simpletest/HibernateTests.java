@@ -7,6 +7,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration({
+	"file:src/main/resources/spring-base.xml",
 	"file:src/main/resources/springmvc-hibernate.xml"
 })
 public class HibernateTests {
@@ -14,4 +15,5 @@ public class HibernateTests {
 	public void test(){
 		System.out.println("Hibertane is OK");
 	}
+
 }

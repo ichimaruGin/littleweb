@@ -28,6 +28,7 @@ import com.iwebirth.controller.responsemodel.LoginInfo;
 import com.iwebirth.controller.responsemodel.LoginResponse;
 import com.iwebirth.controller.responsemodel.LoginStatus;
 import com.iwebirth.db.service.UserService;
+import com.iwebirth.security.CustomException;
 
 @Controller
 @RequestMapping("/login")
@@ -36,33 +37,30 @@ public class LoginController {
 	@Autowired
 	UserService userService;
 	
+	//baseURL/login
 	@RequestMapping
 	public
 	ModelAndView index(HttpSession session,ModelMap model){
 		session.setMaxInactiveInterval(3600);
-		LoginStatus status = (LoginStatus)session.getAttribute("login_status");
-		ModelAndView mav = new ModelAndView();
-		if(status != null && status.getAlive()){			
-			mav.setViewName("head");
-			model.addAttribute("username","yuyang");
-		}else{
-			mav.setViewName("index");
-		}
+		ModelAndView mav = new ModelAndView("index");
 		return mav;
 	}
-	
-	@RequestMapping("/check")
+
+	//@RequestMapping(value="/check",method=RequestMethod.POST) 
+	/**
+	 * method设置为POST时。直接在浏览器访问/login/check会报错 HTTP Status 405 - Request method 'GET' not supported
+	 * **/
+	@RequestMapping(value="/check",method=RequestMethod.POST)
 	public
-	@ResponseBody LoginResponse check(HttpSession session,HttpServletResponse response,LoginInfo loginInfo) throws IOException{
-		session.setMaxInactiveInterval(3600);
-		loginInfo.show();
-		LoginStatus status = (LoginStatus)session.getAttribute("login_status");
-		LoginResponse loginResponse = new LoginResponse();
-		if(status != null && status.getAlive()){	
-			//todo 根据UserStatus 的level 来确定返回到特定页面
-			String level = status.getLevel();
+	@ResponseBody LoginResponse check(HttpSession session,LoginInfo loginInfo) throws Exception{
+		LoginResponse loginResponse = new LoginResponse();		
+		if(!loginInfo.isValid()){
+			System.out.println("抛出CustomException@LoginController.loginResponse.check()");
+			throw new CustomException("测试Spring异常捕获");
 		}else{
-			//首次登陆或者session失效					
+			loginInfo.show();
+			session.setMaxInactiveInterval(3600);
+			//LoginStatus status = (LoginStatus)session.getAttribute("login_status");		
 			if(loginInfo.getAuthcode().equals((String)session.getAttribute("auth_code"))){
 				loginResponse = userService.checkUser(loginInfo);
 				if(loginResponse.getResult().equals(LoginResponse.SUCCESS)){  //login success
@@ -72,10 +70,18 @@ public class LoginController {
 				return loginResponse;
 			}else{				
 				loginResponse.setUsername(loginInfo.getUsername());
-				loginResponse.setResult("FAIL_AUTHCODE");
+				loginResponse.setResult(LoginResponse.FAIL_AUTHCODE);
 			}
-		}		
+					
+		}
 		return loginResponse;
+	}
+	
+	@RequestMapping(value="/logout")
+	public 
+	ModelAndView logout(HttpSession session){
+		session.invalidate();
+		return new ModelAndView("redirect:/login");
 	}
 	
 	@RequestMapping(value="/authcode/{time}",method=RequestMethod.GET)

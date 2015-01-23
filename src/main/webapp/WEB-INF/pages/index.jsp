@@ -16,23 +16,23 @@
 		var authcode = Ext.create("Ext.Img",{
 			src: authcodeBaseUrl+new Date().getMilliseconds(),
 			renderTo: Ext.getBody(),
+			html:'无法获取验证码',
 			width:100,
+			height:25,
 			style:'margin-left:10px',
 			listeners:{
 				el:{
 					click:function(){
 						authcode.setSrc(authcodeBaseUrl+new Date().getMilliseconds());
 					},
-/* 					mouseover:function(){
-						authcode.getEl().dom.style.cursor = 'pointer';
-					} */
 				},
 				afterrender:function(me){
 					me.getEl().dom.style.cursor = 'pointer';
+					me.getEl().dom.title = '看不清?换一张呗~';
 				}
 				
 			}
-		});
+		});	
 		var loginform = Ext.create("Ext.form.Panel",{
 			title:'登录验证',
 			width:300,
@@ -52,42 +52,14 @@
 				name:'username',
 				emptyText:'请输入用户名',
 				blankText:'用户名不能为空',
-				minLength: 6,
-			    enableKeyEvents:true,
-			    listeners:{
-			        	keypress:{
-			        		fn:function(self,e){		
-			    				if(e.getKey() == 13){
-						        	if(me.isValid())  //信息格式验证正确，提交表单，验证信息内容
-						        		me.fireEvent('loginaction',me.getValues()); //触发自定义的事件 
-						        	else{
-						        		 Ext.Msg.alert('提示','     输入信息格式错误           ');	            		
-						        	}
-			    				}
-			        		}
-			        	}
-			   }
+				minLength: 5,
 			},{
 				fieldLabel:'密码',
 				name:'password',
 				emptyText:'请输入密码',
 				blankText:'密码不能为空',
-				minLength: 6,
+				minLength: 5,
 				inputType: 'password' ,
-		        enableKeyEvents:true,
-		        listeners:{
-		        	keypress:{
-		        		fn:function(self,e){		
-		    				if(e.getKey() == 13){
-					        	if(me.isValid())  //信息格式验证正确，提交表单，验证信息内容
-					        		 me.fireEvent('loginaction',me.getValues()); //触发自定义的事件
-					        	else{
-					        		 Ext.Msg.alert('提示','     输入信息格式错误           ');	            		
-					        	}
-		    				}
-		        		}
-		        	}
-		        }
 			},{
 				xtype:'container',
 				layout:{
@@ -99,7 +71,6 @@
 					labelWidth: 50,
 					width:150,
 					name:'authcode',
-					allowEmpty:false,
 					emptyText:'请输入验证码',
 					blankText:'验证码不能为空',
 				},authcode]
@@ -109,45 +80,18 @@
 		        text: '登录',
 		        itemId:'login',
 		        handler:function(){
-		        	var me = loginform;
-		        	if(me.isValid()){  //信息格式验证正确，提交表单，验证信息内容
-			        		//me.fireEvent('loginaction',me.getValues()); //触发自定义的事件;
-			        	loginform.submit({
-			        		clientValidation: true,
-			        		waitMsg:'请稍候',  
-                            waitTitle:'正在验证登录', 
-                            url:'login/check',
-                            success: function(form, action) {
-                                console.log(action.result)
-                                var result = action.result.result;
-                                if(result == 'SUCCESS'){
-                                	window.location.reload();
-                                }else{
-                                	if(result == 'FAIL_AUTHCODE'){
-                                		Ext.Msg.show({title:'登录验证',msg:'验证码错误',buttons:Ext.Msg.OK,icon:Ext.Msg.INFO});
-                                		authcode.setSrc(authcodeBaseUrl+new Date().getMilliseconds()); //重载验证码
-                                	}
-                                }
-                            },
-                            failure: function(form, action) {
-                                switch (action.failureType) {
-                                    case Ext.form.action.Action.CLIENT_INVALID:
-                                        Ext.Msg.alert('Failure', '');
-                                        break;
-                                    case Ext.form.action.Action.CONNECT_FAILURE:
-                                        Ext.Msg.alert('Failure', 'Ajax communication failed');
-                                        break;
-                                    case Ext.form.action.Action.SERVER_INVALID:
-                                       Ext.Msg.alert('出错啦~', '当前提交不可用，请重试');
-                               }
-                            }
-			        	});
-		        	}else{
-		                Ext.Msg.show({  width:150,  title:"登录验证~",  buttons: Ext.Msg.OK,   msg:'请完成表单',icon:Ext.Msg.INFO});      		
-		        	}
+			        login_submit(loginform);	
 		        }
 		    }]
-		});		
+		});	
+		var map = new Ext.util.KeyMap({
+			target: Ext.getBody(),
+			key: Ext.EventObject.ENTER,
+			//key: "arnt",
+			fn:function(){
+				login_submit(loginform);
+			}
+		});
 		var mainpanel = Ext.create("Ext.panel.Panel",{
 		    width:1200,
 		    height:'100%',
@@ -189,6 +133,52 @@
 		//console.log('loginform.getEl()',loginform.getEl());
 		//loginform.getEl().dom.style.marginTop = '20px';
 	});
+	//form validation && submit
+	function login_submit(loginform){
+		if(loginform.isValid()){
+	    	loginform.submit({
+	    		clientValidation: true,
+	    		waitMsg:'请稍候',  
+	            waitTitle:'正在验证登录', 
+	            url:'<%=request.getContextPath()%>/login/check',
+	            success: function(form, action) {
+	                var result = action.result.result;
+	                var level = action.result.level;
+	                if(result == 'SUCCESS'){
+	                	location.href = '<%=request.getContextPath()%>/'+level;
+	                }else{
+	                	if(result == 'FAIL_AUTHCODE'){
+	                		Ext.Msg.show({title:'登录验证',msg:'验证码错误',buttons:Ext.Msg.OK,icon:Ext.Msg.INFO});
+	                		authcode.setSrc(authcodeBaseUrl+new Date().getMilliseconds()); //重载验证码
+	                	}
+	                	if(result == 'FAIL_USER_ERROR'){
+	                		Ext.Msg.show({title:'登录验证',msg:'用户名错误',buttons:Ext.Msg.OK,icon:Ext.Msg.INFO});
+	                		authcode.setSrc(authcodeBaseUrl+new Date().getMilliseconds()); //重载验证码
+	                	}
+	                	if(result == 'FAIL_PASSWD_ERROR'){
+	                		Ext.Msg.show({title:'登录验证',msg:'密码错误',buttons:Ext.Msg.OK,icon:Ext.Msg.INFO});
+	                		authcode.setSrc(authcodeBaseUrl+new Date().getMilliseconds()); //重载验证码
+	                	}
+	                }
+	            },
+	            failure: function(form, action) {
+	                switch (action.failureType) {
+	                    case Ext.form.action.Action.CLIENT_INVALID:
+	                        Ext.Msg.alert('Failure', '');
+	                        break;
+	                    case Ext.form.action.Action.CONNECT_FAILURE:
+	                        Ext.Msg.alert('Failure', 'Ajax communication failed');
+	                        break;
+	                    case Ext.form.action.Action.SERVER_INVALID:
+	                       Ext.Msg.alert('出错啦~', '当前提交不可用，请重试');
+	               }
+	            }
+	    	});
+		}else{
+			Ext.Msg.show({  width:150,  title:"登录验证~",  buttons: Ext.Msg.OK,   msg:'请完善表单后再登录',icon:Ext.Msg.INFO,closable:false});   
+		}
+
+	}
 	</script>	
 </body>
 <style type="text/css">

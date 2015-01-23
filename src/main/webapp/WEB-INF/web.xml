@@ -3,7 +3,14 @@
 	version="3.0">
 
 	<display-name>Little Web</display-name>
-	
+	<error-page>  
+        <error-code>404</error-code>  
+        <location>/error/404.jsp</location>  
+    </error-page>  
+    <error-page>  
+        <error-code>500</error-code>  
+        <location>/error/500.jsp</location>  
+    </error-page>  	
 <!-- 	<servlet-mapping>
 		<servlet-name>default</servlet-name>
 		<url-pattern>*.jpg</url-pattern>
@@ -23,6 +30,7 @@
 		<init-param>
 			<param-name>contextConfigLocation</param-name>
 			<param-value>
+			classpath:spring-base.xml
 			classpath:springmvc-servlet.xml
 			classpath:springmvc-hibernate.xml
 			</param-value>

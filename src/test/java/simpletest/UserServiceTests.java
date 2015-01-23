@@ -26,7 +26,7 @@ public class UserServiceTests {
 	@Test
 	public void addUser(){
 		Department department = new Department("测试NAME", "测试LOCATION", "测试latitude", "测试longitude");
-		User user = new User("admin", "admin", LoginStatus.ADMIN, department, System.currentTimeMillis());
+		User user = new User("seller", "seller", LoginStatus.EV_SELLER, department, System.currentTimeMillis());
 		System.out.println(CRUDEvent.getNameByValue(userService.addUser(user)));
 	}
 }

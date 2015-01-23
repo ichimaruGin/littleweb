@@ -15,7 +15,7 @@ public class LoginInfo implements Serializable{
 	
 	String authcode;
 
-
+	
 	public String getUsername() {
 		return username;
 	}
@@ -44,4 +44,7 @@ public class LoginInfo implements Serializable{
 		System.out.println("username:"+username+" "+"password:"+password+" authcode:"+authcode);
 	}
 	
+	public boolean isValid(){
+		return username!=null&&password!=null&&authcode!=null;
+	}
 }

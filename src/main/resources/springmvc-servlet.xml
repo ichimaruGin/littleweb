@@ -29,7 +29,9 @@
 	<!--<import resource="redis-context.xml"/> -->
 
 	<!-- 错误路径和错误页面，注意指定viewResolver -->
-	<!--<mvc:view-controller path="/error/404" view-name="404"/> <mvc:view-controller 
-		path="/error/500" view-name="500"/> <mvc:view-controller path="/error/uncaughtException" 
-		view-name="uncaughtexception"/> -->
+<!-- 	<mvc:view-controller path="/error/404" view-name="404"/> 
+	<mvc:view-controller path="/error/500" view-name="500"/>  -->
+<!-- 	<mvc:view-controller path="/error/uncaughtException" view-name="uncaughtexception"/> -->
+
+	<bean id="myExceptionHandler" class="com.iwebirth.security.MyExceptionHandler"></bean>
 </beans>

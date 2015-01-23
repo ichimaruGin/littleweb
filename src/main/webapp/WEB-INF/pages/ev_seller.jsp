@@ -5,13 +5,21 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/resources/ext-theme-neptune-all.css">
+<script>
+var baseURL = '<%=request.getContextPath()%>';
+var user_global = '${username}';
+</script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/extjs/ext-all-debug.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/extjs/ext-lang-zh_CN.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath()%>/app/ev_seller.js"></script>
 <title>index</title>
 </head>
 <body>	
-	HEAD;
-	${username};
-	<%=session.getAttribute("user_status")%>
 </body>
+<style type="text/css">
+		html{
+            height: 100%;       
+            background-color: light-gray
+        }
+</style>
 </html>

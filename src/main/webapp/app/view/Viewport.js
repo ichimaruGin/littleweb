@@ -1,7 +1,7 @@
 Ext.define('BS.view.Viewport', {
     extend: 'Ext.container.Viewport',
     requires:[
-        'Ext.layout.container.Fit',
+        'BS.view.Main',
     ],
 
 	layout:{
@@ -13,7 +13,5 @@ Ext.define('BS.view.Viewport', {
 	minWidth:1200,
 	minHeight:750,
 	autoScroll:true,
-    items: [{
-        
-    }]
+    items: [{xtype:'main'}]
 });

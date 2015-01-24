@@ -1,18 +1,21 @@
-package com.iwebirth.db.service;
-/**
- * @author YY_410
- * 2015-1-22
- * ref:http://www.cnblogs.com/happyPawpaw/archive/2013/04/09/3009553.html
- * **/
-public enum CRUDEvent {
+package com.iwebirth.util;
+
+import com.iwebirth.db.service.CRUDEvent;
+
+public enum StaticParam {
+
+	//DEPARTMENT_STATUS
+	DEPARTMENT_STATUS_EVSELLER(1),
+	DEPARTMENT_STATUS_EVUSER(2),
+	DEPARTMENT_STATUS_BSSELLER(3),
+	DEPARTMENT_STATUS_BSUSER(4),
 	
-	SAVE_SUCCESS(1),SAVE_FAIL(2),SAVE_EXCEPTION(3),
-	QUERY_SUCCESS(4),QUERY_FAIL(5),QUERY_EXCEPTION(6),
-	INSERT_SUCCESS(7),INSERT_FAIL(8),INSERT_EXCEPTION(9),
-	UPDATE_SUCCESS(10),UPDATE_FAIL(11),UPDATE_EXCEPTION(12);	
+	//EVINFO_KIND
+	EV_KIND_TRANSPORT_HEAVY(5),
+	EV_KIND_TRANSPORT_LIGHT(6);
 	
 	private int value;
-	private CRUDEvent(int value){
+	private StaticParam(int value){
 		this.value = value;
 	}
 	

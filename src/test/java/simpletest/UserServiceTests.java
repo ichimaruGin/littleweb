@@ -12,6 +12,7 @@ import com.iwebirth.db.model.Department;
 import com.iwebirth.db.model.User;
 import com.iwebirth.db.service.CRUDEvent;
 import com.iwebirth.db.service.UserService;
+import com.iwebirth.util.StaticParam;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration({
@@ -25,8 +26,8 @@ public class UserServiceTests {
 	
 	@Test
 	public void addUser(){
-		Department department = new Department("测试NAME", "测试LOCATION", "测试latitude", "测试longitude");
-		User user = new User("seller", "seller", LoginStatus.EV_SELLER, department, System.currentTimeMillis());
+		Department department = new Department("123", "测试123", "测试12", "测试1",StaticParam.DEPARTMENT_STATUS_BSSELLER.name());
+		User user = new User("test", "test", LoginStatus.EV_SELLER, department, System.currentTimeMillis());
 		System.out.println(CRUDEvent.getNameByValue(userService.addUser(user)));
 	}
 }

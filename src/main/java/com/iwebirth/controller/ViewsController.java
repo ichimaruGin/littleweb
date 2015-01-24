@@ -16,7 +16,6 @@ public class ViewsController {
 	public
 	ModelAndView dispatcher(HttpSession session,ModelMap model,@PathVariable String level){
 		session.setMaxInactiveInterval(3600);
-		System.out.println("level:"+level);
 		LoginStatus status = (LoginStatus)session.getAttribute("login_status");
 		ModelAndView mav = new ModelAndView();
 		if(status != null){	

@@ -4,7 +4,10 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/resources/ext-theme-neptune-all.css">
+
+<link rel="shortcut icon" href="resources/icons/favicon.ico" />
+<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/icon.css">
+<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/ext-theme-neptune-all.css">
 <script>
 var baseURL = '<%=request.getContextPath()%>';
 var user_global = '${username}';

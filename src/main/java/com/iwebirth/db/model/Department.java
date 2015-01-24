@@ -26,6 +26,9 @@ public class Department {
 	
 	@Column(name="LONGITUDE",nullable=false,columnDefinition="varchar(255) not null")
 	String longitude;
+	
+	@Column(name="STATUS",nullable=false)
+	String status;  //refer to StaticParam.java
 
 	public Integer getId() {
 		return id;
@@ -63,17 +66,26 @@ public class Department {
 		return longitude;
 	}
 
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
 	public void setLongitude(String longitude) {
 		this.longitude = longitude;
 	}
 	public Department(){}
 	public Department(String name, String location,
-			String latitude, String longitude) {
+			String latitude, String longitude, String status) {
 		super();
 		this.name = name;
 		this.location = location;
 		this.latitude = latitude;
 		this.longitude = longitude;
+		this.status = status;
 	}
-
+	
 }

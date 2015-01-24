@@ -47,7 +47,7 @@
 				xtype:'image',
 				baseCls:'',
 				border:1,
-				src:'resources/images/logo1200.png',
+				//src:'resources/images/logo1200.png',
 				style:'width: 1200px;height: 115px;'
 			}],
 			listeners:{

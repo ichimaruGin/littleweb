@@ -12,7 +12,9 @@ public class LoginStatus implements Serializable {
 	public  static final String ADMIN = "admin";
 	public  static final String EV_SELLER = "ev_seller";
 	public  static final String EV_USER = "ev_user";
-	public static final String PEOPLE = "people";
+	public  static final String BS_SELLER = "ev_seller";
+	public  static final String BS_USER = "ev_user";
+	public  static final String PEOPLE = "people";
 	
 	String username;
 	

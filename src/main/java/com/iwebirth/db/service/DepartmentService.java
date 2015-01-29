@@ -19,9 +19,7 @@ public class DepartmentService {
 		if(dDepartment == null){
 			session.save(department);
 		}else{
-			dDepartment.setLocation(department.getLocation());
-			dDepartment.setLatitude(department.getLatitude());
-			dDepartment.setLongitude(department.getLongitude());
+			return CRUDEvent.REDUPLICATE.getValue();  //UNIQUE KEY 重复插入
 		}
 		return CRUDEvent.INSERT_SUCCESS.getValue();
 	}
@@ -35,7 +33,6 @@ public class DepartmentService {
 		Session session = sf.getCurrentSession();
 		Department dDepartment = (Department)session.createCriteria(Department.class).add(Restrictions.eq("id", id)).uniqueResult();
 		if(dDepartment == null){
-			System.out.println("无");
 			res = CRUDEvent.UPDATE_FAIL.getValue();
 		}else{
 			dDepartment.setName(department.getName());
@@ -46,5 +43,11 @@ public class DepartmentService {
 			res = CRUDEvent.UPDATE_SUCCESS.getValue();
 		}
 		return res;
+	}
+	
+	public Department getDepartmentById(Integer id){
+		Session session = sf.getCurrentSession();
+		Department department = (Department)session.get(Department.class, id);
+		return department;
 	}
 }

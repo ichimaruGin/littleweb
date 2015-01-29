@@ -22,6 +22,8 @@ public class EVTreeResponseLeaf {
 	/*attr from extjs's prototype*/	
 	String iconCls;//node's icon
 	
+	String qtip;//row's tip
+	
 	boolean leaf = true;//node is leaf(default is true)
 
 	public String getTid() {
@@ -68,12 +70,20 @@ public class EVTreeResponseLeaf {
 		return leaf;
 	}
 
+	public String getQtip() {
+		return qtip;
+	}
+
+	public void setQtip(String qtip) {
+		this.qtip = qtip;
+	}
+
 	public void setLeaf(boolean leaf) {
 		this.leaf = leaf;
 	}
 
 	public EVTreeResponseLeaf(String tid, String licenseNumber,
-			String department, String rentStatus, String iconCls, boolean leaf) {
+			String department, String rentStatus, String iconCls,String qtip, boolean leaf) {
 		super();
 		this.tid = tid;
 		this.licenseNumber = licenseNumber;
@@ -81,6 +91,7 @@ public class EVTreeResponseLeaf {
 		this.rentStatus = rentStatus;
 		this.iconCls = iconCls;
 		this.leaf = leaf;
+		this.qtip = qtip;
 	}
 	
 	

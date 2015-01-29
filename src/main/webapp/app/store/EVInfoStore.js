@@ -4,6 +4,10 @@ Ext.define('BS.store.EVInfoStore',{
 	model: 'BS.model.EVInfoModel',
 	proxy:{
 		url:'ev/info/treegrid',
-		type:'ajax'
+		type:'ajax',
+		extraParams:{
+			catagory:"normal",
+			username:user_global
+		}
 	}
 });

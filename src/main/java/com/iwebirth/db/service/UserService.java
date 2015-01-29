@@ -11,6 +11,7 @@ import com.iwebirth.controller.responsemodel.LoginInfo;
 import com.iwebirth.controller.responsemodel.LoginResponse;
 import com.iwebirth.db.model.Department;
 import com.iwebirth.db.model.User;
+import com.iwebirth.util.StaticParam;
 
 @Component
 public class UserService {
@@ -26,22 +27,27 @@ public class UserService {
 		loginResponse.setUsername(loginInfo.getUsername());
 		try{
 			Session session = sf.getCurrentSession();
-			Criteria c = session.createCriteria(User.class).add(Restrictions.eq("username", loginInfo.getUsername())).setMaxResults(1);
+			Criteria c = session.createCriteria(User.class).add(Restrictions.eq("username", loginInfo.getUsername()));
 			User dUser = (User)c.uniqueResult();
 			if(dUser == null){				
-				loginResponse.setResult(LoginResponse.FAIL_USER_ERROR); //has no such username
+				loginResponse.setResult(StaticParam.LOGIN_RESPONSE_FAIL_USER_ERROR); //has no such username
 			}else{
 				if(!dUser.getPassword().equals(loginInfo.getPassword()))
-					loginResponse.setResult(LoginResponse.FAIL_PASSWD_ERROR); //passwd error
+					loginResponse.setResult(StaticParam.LOGIN_RESPONSE_FAIL_PASSWD_ERROR); //passwd error
 				else{
-					loginResponse.setLevel(dUser.getLevel());   //pass check && add user level
-					loginResponse.setResult(LoginResponse.SUCCESS);
+					loginResponse.setResult(StaticParam.LOGIN_RESPONSE_SUCCESS);
+					if(StaticParam.USER_LEVEL_NORMAL.equals(dUser.getLevel())){
+						//"normal" 一般的企业
+						loginResponse.setLevel(dUser.getDepartment().getStatus());
+					}else{
+						//"admin" or "parent"  管理员或者家长
+						loginResponse.setLevel(dUser.getLevel());
+					}
 				}
 			}
 		}catch(Exception e){
 			e.printStackTrace();
 		}
-		System.out.println(loginResponse.getResult());
 		return loginResponse;
 	}
 	
@@ -65,7 +71,6 @@ public class UserService {
 			res = CRUDEvent.INSERT_EXCEPTION.getValue();
 			e.printStackTrace();
 		}
-		System.out.println("addUser res:"+res);
 		return res;
 	}
 }

@@ -4,23 +4,27 @@ Ext.define('BS.view.EVGridTree',{
 	requires: [
 	    'BS.store.EVInfoStore'
 	],  
-	 height: 500,
 	 width: 900,
      useArrows: true,
      rootVisible: false,  //会自动load store ；若为true，则不会自动load
      multiSelect: true,
+     overflowY:'auto',
     // singleExpand: true,
     // hideHeaders:true, 
     // expanded:false,
      
      initComponent: function() {   
     	 var me = this;
+    	 Ext.create('BS.store.EVInfoStore',{
+    		 storeId:'mystore'
+    	 });
+    	 console.log(Ext.data.StoreManager.lookup('mystore'));
          Ext.apply(this, {
         	 layout:{
         		 type:'vbox',
         		 align:'center'
         	 },
-        	 store: Ext.create('BS.store.EVInfoStore'),  	
+        	 store: 'mystore', 	
              columns: [{
                  xtype: 'treecolumn', //this is so we know which column will show the tree
                  text: '车辆编号',

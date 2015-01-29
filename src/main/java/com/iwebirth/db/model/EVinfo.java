@@ -27,21 +27,21 @@ public class EVinfo {
 	@Column(name="TID",nullable=false,unique=true)
 	String tId;  //车辆编号
 	
-	@Column(name="LICENSE_NUMBER")
+	@Column(name="LICENSE_NUMBER",unique=true)
 	String licenseNumber;  //车牌
 	
-	@Column(name="TKIND")
-	String tKind; //车辆类型  refer to StaticParam.java
+	@Column(name="KIND")
+	String kind; //车辆类型  refer to StaticParam.java
 	
 	@ManyToOne(targetEntity=Department.class)
 	@Cascade(value={})
 	@JoinColumn(name="DEPARTMENT_ID",referencedColumnName="id",nullable=false)
 	Department department;  //所属
 	
-	@OneToOne(targetEntity=Department.class)
-	@Cascade(value={})
-	@JoinColumn(name="RENT_STATUS_ID",referencedColumnName="id",nullable=false)
-	Integer rentStatusId = 0;  //对应最新的RentStatus (如果值为0，表示当前没有租赁出)
+//	@OneToOne(targetEntity=Department.class)
+//	@Cascade(value={})
+//	@JoinColumn(name="RENT_STATUS_ID",referencedColumnName="id",nullable=false)
+//	Integer rentStatusId = 0;  //对应最新的RentStatus (如果值为0，表示当前没有租赁出)
 
 	public Integer getId() {
 		return id;
@@ -75,13 +75,20 @@ public class EVinfo {
 		this.department = department;
 	}
 
-	public Integer getRentStatusId() {
-		return rentStatusId;
+	public String getKind() {
+		return kind;
 	}
 
-	public void setRentStatusId(Integer rentStatusId) {
-		this.rentStatusId = rentStatusId;
+	public void setKind(String kind) {
+		this.kind = kind;
 	}
-	
-	
+
+	public EVinfo(String tId, String licenseNumber, String kind,
+			Department department) {
+		super();
+		this.tId = tId;
+		this.licenseNumber = licenseNumber;
+		this.kind = kind;
+		this.department = department;
+	}	
 }

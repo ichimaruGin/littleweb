@@ -19,15 +19,16 @@ import com.iwebirth.util.StaticParam;
 	"file:src/main/resources/spring-base.xml",
 	"file:src/main/resources/springmvc-hibernate.xml"
 })
-public class UserServiceTests {
+public class ServiceUserTests {
 	
 	@Autowired
 	UserService userService;
 	
 	@Test
 	public void addUser(){
-		Department department = new Department("123", "测试123", "测试12", "测试1",StaticParam.DEPARTMENT_STATUS_BSSELLER.name());
-		User user = new User("test", "test", LoginStatus.EV_SELLER, department, System.currentTimeMillis());
+		Department department = new Department("123", "测试123", "测试12", "测试1",StaticParam.DEPARTMENT_STATUS_EV_SELLER);
+		User user = new User("test", "test", StaticParam.USER_LEVEL_NORMAL, department, System.currentTimeMillis());
 		System.out.println(CRUDEvent.getNameByValue(userService.addUser(user)));
 	}
+	
 }

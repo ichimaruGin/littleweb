@@ -29,6 +29,7 @@ import com.iwebirth.controller.responsemodel.LoginResponse;
 import com.iwebirth.controller.responsemodel.LoginStatus;
 import com.iwebirth.db.service.UserService;
 import com.iwebirth.security.CustomException;
+import com.iwebirth.util.StaticParam;
 
 @Controller
 @RequestMapping("/login")
@@ -63,14 +64,14 @@ public class LoginController {
 			//LoginStatus status = (LoginStatus)session.getAttribute("login_status");		
 			if(loginInfo.getAuthcode().equals((String)session.getAttribute("auth_code"))){
 				loginResponse = userService.checkUser(loginInfo);
-				if(loginResponse.getResult().equals(LoginResponse.SUCCESS)){  //login success
+				if(loginResponse.getResult().equals(StaticParam.LOGIN_RESPONSE_SUCCESS)){  //login success
 					LoginStatus newStatus = new LoginStatus(loginResponse.getUsername(),loginResponse.getLevel(),true);
 					session.setAttribute("login_status", newStatus);
 				}
 				return loginResponse;
 			}else{				
 				loginResponse.setUsername(loginInfo.getUsername());
-				loginResponse.setResult(LoginResponse.FAIL_AUTHCODE);
+				loginResponse.setResult(StaticParam.LOGIN_RESPONSE_FAIL_AUTHCODE);
 			}
 					
 		}

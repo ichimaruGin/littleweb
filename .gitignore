@@ -8,3 +8,4 @@ build
 .settings/
 src/main/webapp/extjs/
 src/main/webapp/resources
+.idea

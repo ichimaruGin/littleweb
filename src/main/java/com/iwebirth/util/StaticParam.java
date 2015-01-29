@@ -1,44 +1,28 @@
 package com.iwebirth.util;
 
-import com.iwebirth.db.service.CRUDEvent;
+public class StaticParam {
 
-public enum StaticParam {
-
-	//DEPARTMENT_STATUS
-	DEPARTMENT_STATUS_EVSELLER(1),
-	DEPARTMENT_STATUS_EVUSER(2),
-	DEPARTMENT_STATUS_BSSELLER(3),
-	DEPARTMENT_STATUS_BSUSER(4),
+	//LOGIN_RESPONSE 登录返回值
+	public static final String LOGIN_RESPONSE_SUCCESS = "SUCCESS";
+	public static final String LOGIN_RESPONSE_FAIL_AUTHCODE = "FAIL_AUTHCODE";
+	public static final String LOGIN_RESPONSE_FAIL_USER_ERROR = "FAIL_USER_ERROR";
+	public static final String LOGIN_RESPONSE_FAIL_PASSWD_ERROR = "FAIL_PASSWD_ERROR";	
 	
-	//EVINFO_KIND
-	EV_KIND_TRANSPORT_HEAVY(5),
-	EV_KIND_TRANSPORT_LIGHT(6);
+	//USER_LEVEL 用户等级
+	public static final String USER_LEVEL_ADMIN = "admin";
+	public static final String USER_LEVEL_NORMAL = "normal";
+	public static final String USER_LEVEL_PARENT = "parent";
 	
-	private int value;
-	private StaticParam(int value){
-		this.value = value;
-	}
+	//DEPARTMENT_STATUS 部门身份
+	public static final String DEPARTMENT_STATUS_EV_SELLER = "ev_seller";
+	public static final String DEPARTMENT_STATUS_EV_BUYER = "ev_buyer";
+	public static final String DEPARTMENT_STATUS_SB_SELLER = "sb_seller";
+	public static final String DEPARTMENT_STATUS_SB_BUYER = "sb_buyer";
 	
-	/**
-	 * 返回对应的数值
-	 * **/
-	public int getValue(){
-		return value;
-	}
-	/**
-	 * 返回name(调用的是enum的name()方法)
-	 * **/
-	public String getName(){
-		return this.name();
-	}
-
-	public static String getNameByValue(int value) {
-        for (CRUDEvent c : CRUDEvent.values()) {
-            if (c.getValue() == value) {
-                return c.name();
-            }
-        }
-        return null;
-    }
-	
+	//EVINFO_KIND  工程车车辆种类
+	public static final String EVINFO_KIND_KINDONE = "kind_one";
+	public static final String EVINFO_KIND_KINDTWO = "kind_two";
+	public static final String EVINFO_KIND_KINDTHREE = "kind_three";
+	public static final String EVINFO_KIND_KINDFOUR = "kind_four";
+	public static final String EVINFO_KIND_KINDFIVE = "kind_five";
 }

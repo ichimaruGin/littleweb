@@ -4,17 +4,12 @@ package com.iwebirth.controller.responsemodel;
  * 2015-1-22
  * **/
 public class LoginResponse {
-	
-	public static final String SUCCESS = "SUCCESS";
-	public static final String FAIL_AUTHCODE = "FAIL_AUTHCODE";
-	public static final String FAIL_USER_ERROR = "FAIL_USER_ERROR";
-	public static final String FAIL_PASSWD_ERROR = "FAIL_PASSWD_ERROR";	
-	
+		
 	String username;
 	
 	String result;
 	
-	String level;
+	String level;  //first check User.level ,then if User.level == "normal",then check the User.department.status
 	
 	boolean success = true;
 	

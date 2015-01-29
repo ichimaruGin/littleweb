@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.iwebirth.controller.responsemodel.LoginStatus;
+import com.iwebirth.util.StaticParam;
 
 @Controller
 public class ViewsController {
@@ -19,15 +20,15 @@ public class ViewsController {
 		LoginStatus status = (LoginStatus)session.getAttribute("login_status");
 		ModelAndView mav = new ModelAndView();
 		if(status != null){	
-				if(level.equals(LoginStatus.ADMIN)){
+				model.put("username", status.getUsername());
+				if(level.equals(StaticParam.USER_LEVEL_ADMIN)){
 					mav.setViewName("admin");
-					model.put("username", status.getUsername());
-				}else if(level.equals(LoginStatus.EV_USER)){
+				}else if(level.equals(StaticParam.USER_LEVEL_PARENT)){
+					mav.setViewName("parent");
+				}else if(level.equals(StaticParam.DEPARTMENT_STATUS_EV_BUYER)){
 					mav.setViewName("ev_user");
-					model.put("username", status.getUsername());
-				}else if(level.equals(LoginStatus.EV_SELLER)){
+				}else if(level.equals(StaticParam.DEPARTMENT_STATUS_EV_SELLER)){
 					mav.setViewName("ev_seller");
-					model.put("username", status.getUsername());
 				}			
 		}else{
 			mav = new ModelAndView("redirect:/login");

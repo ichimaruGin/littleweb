@@ -25,6 +25,7 @@ Ext.define('BS.view.Main',{
     	itemId:'main_tabpanel',
         border:false,
         style:'border-style:solid;border-width: 0px 1px 0px 0px;',
+        layout:'fit',
     	items:[{
     		xtype:'evgridtree',
     		title:'车辆信息'

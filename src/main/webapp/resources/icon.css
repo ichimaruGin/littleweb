@@ -1,0 +1,6 @@
+.treenode {
+	background-image: url("icons/folder_go.gif") !important;
+}
+.treeleaf {
+	background-image: url("icons/blue_book.png") !important;
+}

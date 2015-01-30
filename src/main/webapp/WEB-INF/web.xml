@@ -44,12 +44,4 @@
 		<url-pattern>/</url-pattern>
 	</servlet-mapping>
 	<!-- spring backendServlet 只拦截backend 放走其他资源-->
-<!-- 	<servlet-mapping>
-		<servlet-name>backendServlet</servlet-name>
-		<url-pattern>/backend/*</url-pattern>
-	</servlet-mapping> -->
-
-
-
-
 </web-app>

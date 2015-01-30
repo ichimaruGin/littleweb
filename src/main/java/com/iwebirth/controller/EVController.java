@@ -25,10 +25,10 @@ public class EVController {
 	@ResponseBody TreeResponseRoot<EVTreeResponseNode> getEVinfoAsTreegrid(@RequestParam String username,@RequestParam(required=false) String catagory){
 		System.out.println("username"+username+"  catagory:"+catagory);
 		EVTreeResponseLeaf leaf_one = new EVTreeResponseLeaf("1", "a", "b", "rs", "treeleaf", "qtip_one",true);
-		EVTreeResponseLeaf leaf_two = new EVTreeResponseLeaf("2", "a", "b", "rs", "treeleaf", "",true);
-		EVTreeResponseLeaf leaf_three = new EVTreeResponseLeaf("3", "a", "b", "rs", "treeleaf","", true);
-		EVTreeResponseLeaf leaf_four = new EVTreeResponseLeaf("4", "a", "b", "rs", "treeleaf","", true);
-		EVTreeResponseLeaf leaf_five = new EVTreeResponseLeaf("5", "a", "b", "rs", "treeleaf","", true);
+		EVTreeResponseLeaf leaf_two = new EVTreeResponseLeaf("2", "a", "b", "rs", "treeleaf", "我是2号",true);
+		EVTreeResponseLeaf leaf_three = new EVTreeResponseLeaf("3", "a", "b", "rs", "treeleaf","我是2号", true);
+		EVTreeResponseLeaf leaf_four = new EVTreeResponseLeaf("4", "a", "b", "rs", "treeleaf","qtip_one", true);
+		EVTreeResponseLeaf leaf_five = new EVTreeResponseLeaf("5", "a", "b", "rs", "treeleaf","qtip_one", true);
 		ArrayList<EVTreeResponseLeaf> children_one = new ArrayList<EVTreeResponseLeaf>();
 		children_one.add(leaf_one);
 		children_one.add(leaf_two);

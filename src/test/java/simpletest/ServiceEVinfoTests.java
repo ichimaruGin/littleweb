@@ -18,8 +18,8 @@ import com.iwebirth.util.StaticParam;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration({
-	"file:src/main/resources/spring-base.xml",
-	"file:src/main/resources/springmvc-hibernate.xml"
+	"classpath:spring-base.xml",
+	"classpath:springmvc-hibernate.xml"
 })
 public class ServiceEVinfoTests {
 	@Autowired

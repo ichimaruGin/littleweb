@@ -15,7 +15,9 @@ public class EVTreeResponseLeaf {
 	
 	String licenseNumber;  
 	
-	String department; //EVinfo.getDepartment().getName();
+	String origin; //EVinfo.getOrigin().getName();
+
+    String owner;
 	
 	String rentStatus; //EVinfo.getRentStatus().getIsRenting();
 	
@@ -42,13 +44,6 @@ public class EVTreeResponseLeaf {
 		this.licenseNumber = licenseNumber;
 	}
 
-	public String getDepartment() {
-		return department;
-	}
-
-	public void setDepartment(String department) {
-		this.department = department;
-	}
 
 	public String getRentStatus() {
 		return rentStatus;
@@ -82,17 +77,30 @@ public class EVTreeResponseLeaf {
 		this.leaf = leaf;
 	}
 
-	public EVTreeResponseLeaf(String tid, String licenseNumber,
-			String department, String rentStatus, String iconCls,String qtip, boolean leaf) {
-		super();
-		this.tid = tid;
-		this.licenseNumber = licenseNumber;
-		this.department = department;
-		this.rentStatus = rentStatus;
-		this.iconCls = iconCls;
-		this.leaf = leaf;
-		this.qtip = qtip;
-	}
-	
-	
+    public String getOrigin() {
+        return origin;
+    }
+
+    public void setOrigin(String origin) {
+        this.origin = origin;
+    }
+
+    public String getOwner() {
+        return owner;
+    }
+
+    public void setOwner(String owner) {
+        this.owner = owner;
+    }
+
+    public EVTreeResponseLeaf(String tid, String licenseNumber, String origin, String owner, String rentStatus, String iconCls, String qtip, boolean leaf) {
+        this.tid = tid;
+        this.licenseNumber = licenseNumber;
+        this.origin = origin;
+        this.owner = owner;
+        this.rentStatus = rentStatus;
+        this.iconCls = iconCls;
+        this.qtip = qtip;
+        this.leaf = leaf;
+    }
 }

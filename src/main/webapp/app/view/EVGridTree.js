@@ -38,21 +38,28 @@ Ext.define('BS.view.EVGridTree',{
                  menuDisabled : true,
                  sortable: true,
                  align: 'center',
-                 dataIndex: 'licenseNumber',
+                 dataIndex: 'licenseNumber'
              },{
                  text: '所属公司',
-                 flex: 4,
+                 flex: 3,
                  menuDisabled : true,
                  sortable: false,
                  align: 'center',
-                 dataIndex: 'department',
+                 dataIndex: 'origin'
+             },{
+                 text: '当前归属',
+                 flex: 3,
+                 menuDisabled : true,
+                 sortable: false,
+                 align: 'center',
+                 dataIndex: 'origin'
              },{
             	text: '租赁状态' ,
             	//tooltip: '单击显示详细租赁信息',
                 menuDisabled : true,
                 sortable: false,
                 align: 'center',
-                dataIndex: 'rentStatus',
+                dataIndex: 'rentStatus'
              },{
                  text: '编辑',
                  width: 55,

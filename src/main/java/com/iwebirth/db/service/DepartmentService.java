@@ -1,5 +1,6 @@
 package com.iwebirth.db.service;
 
+import com.iwebirth.db.model.EVinfo;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
@@ -7,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.iwebirth.db.model.Department;
+
+import java.util.List;
 
 @Service
 public class DepartmentService {
@@ -25,13 +28,14 @@ public class DepartmentService {
 	}
 	
 	/**
-	 * @param id ,id which needs update 
+	 * @param id  which needs update
 	 * admin has the authority to do this
 	 * **/
 	public int updateDepartment(Integer id,Department department){
-		int res = 0;
+		int res;
 		Session session = sf.getCurrentSession();
-		Department dDepartment = (Department)session.createCriteria(Department.class).add(Restrictions.eq("id", id)).uniqueResult();
+		Department dDepartment = (Department)session.createCriteria(Department.class)
+                .add(Restrictions.eq("id", id)).uniqueResult();
 		if(dDepartment == null){
 			res = CRUDEvent.UPDATE_FAIL.getValue();
 		}else{
@@ -45,9 +49,9 @@ public class DepartmentService {
 		return res;
 	}
 	
-	public Department getDepartmentById(Integer id){
-		Session session = sf.getCurrentSession();
-		Department department = (Department)session.get(Department.class, id);
-		return department;
-	}
+	public Department getDepartmentById(Integer id) {
+        Session session = sf.getCurrentSession();
+        Department department = (Department) session.get(Department.class, id);
+        return department;
+    }
 }

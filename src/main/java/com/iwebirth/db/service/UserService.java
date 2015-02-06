@@ -52,7 +52,7 @@ public class UserService {
 	}
 	
 	public int addUser(User user){
-		int res = 0;
+		int res;
 		Department department = user.getDepartment();
 		try{
 			Session session = sf.getCurrentSession();

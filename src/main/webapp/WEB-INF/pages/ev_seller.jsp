@@ -22,7 +22,7 @@ var user_global = '${username}';
 <style type="text/css">
 		html{
             height: 100%;       
-            background-color: light-gray
+            background-color: lightgray;
         }
 </style>
 </html>

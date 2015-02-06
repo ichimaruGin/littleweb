@@ -6,8 +6,8 @@ Ext.define('BS.store.EVInfoStore',{
 		url:'ev/info/treegrid',
 		type:'ajax',
 		extraParams:{
-			catagory:"normal",
-			username:user_global
+            category:"normal",
+			username: user_global
 		}
 	}
 });

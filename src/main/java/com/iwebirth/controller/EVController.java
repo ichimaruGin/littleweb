@@ -1,22 +1,9 @@
 package com.iwebirth.controller;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
-import com.iwebirth.db.model.EVinfo;
 import com.iwebirth.db.service.EVinfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-
-import com.iwebirth.controller.responsemodel.EVTreeResponseLeaf;
-import com.iwebirth.controller.responsemodel.EVTreeResponseNode;
-import com.iwebirth.controller.responsemodel.TreeResponseRoot;
 
 /**
  * @author YY_410
@@ -58,24 +45,24 @@ public class EVController {
 //		TreeResponseRoot<EVTreeResponseNode> root = new TreeResponseRoot<EVTreeResponseNode>(node_children);
 //		return root;
 //	}
-    @RequestMapping(value="/info/treegrid",method=RequestMethod.GET)
-    public
-    @ResponseBody TreeResponseRoot<EVTreeResponseNode>
-    getEVinfoAsTreegridStore(@RequestParam String username,@RequestParam(required=false) String category){
-        Map<String, List> map = eVinfoService.getEVinfoAsTreeStore(username);
-        ArrayList<EVTreeResponseNode> l_node = new ArrayList<EVTreeResponseNode>();
-        Set<String> keys = map.keySet();
-        for(String key : keys){
-            List<EVinfo> l_ev = (List)map.get(key);
-            ArrayList<EVTreeResponseLeaf> l_leaf = new ArrayList<EVTreeResponseLeaf>();
-            for(EVinfo ev : l_ev){
-                EVTreeResponseLeaf leaf = new EVTreeResponseLeaf(ev.gettId(),ev.getLicenseNumber(),ev.getOrigin().getName(),ev.getOwner().getName(),"?","treeleaf","",true);
-                l_leaf.add(leaf);
-            }
-            EVTreeResponseNode node = new EVTreeResponseNode(key,"treenode",true,l_leaf);
-            l_node.add(node);
-        }
-        TreeResponseRoot<EVTreeResponseNode> root = new TreeResponseRoot<EVTreeResponseNode>(l_node);
-        return root;
-    }
+//    @RequestMapping(value="/info/treegrid",method=RequestMethod.GET)
+//    public
+//    @ResponseBody TreeResponseRoot<EVTreeResponseNode>
+//    getEVinfoAsTreegridStore(@RequestParam String username,@RequestParam(required=false) String category){
+//        Map<String, List> map = eVinfoService.getEVinfoAsTreeStore(username);
+//        ArrayList<EVTreeResponseNode> l_node = new ArrayList<EVTreeResponseNode>();
+//        Set<String> keys = map.keySet();
+//        for(String key : keys){
+//            List<EVinfo> l_ev = (List)map.get(key);
+//            ArrayList<EVTreeResponseLeaf> l_leaf = new ArrayList<EVTreeResponseLeaf>();
+//            for(EVinfo ev : l_ev){
+//                EVTreeResponseLeaf leaf = new EVTreeResponseLeaf(ev.gettId(),ev.getLicenseNumber(),ev.getOrigin().getName(),ev.getOwner().getName(),"?","treeleaf","",true);
+//                l_leaf.add(leaf);
+//            }
+//            EVTreeResponseNode node = new EVTreeResponseNode(key,"treenode",true,l_leaf);
+//            l_node.add(node);
+//        }
+//        TreeResponseRoot<EVTreeResponseNode> root = new TreeResponseRoot<EVTreeResponseNode>(l_node);
+//        return root;
+//    }
 }

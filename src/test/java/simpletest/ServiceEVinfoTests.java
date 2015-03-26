@@ -1,22 +1,11 @@
 package simpletest;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
-import org.junit.Test;
+import com.iwebirth.db.service.DepartmentService;
+import com.iwebirth.db.service.EVinfoService;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-
-import com.iwebirth.db.model.Department;
-import com.iwebirth.db.model.EVinfo;
-import com.iwebirth.db.service.CRUDEvent;
-import com.iwebirth.db.service.DepartmentService;
-import com.iwebirth.db.service.EVinfoService;
-import com.iwebirth.util.StaticParam;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration({
@@ -48,25 +37,5 @@ public class ServiceEVinfoTests {
 //		System.out.println(CRUDEvent.getNameByValue(eVinfoService.addEVinfo(evs)));
 //	}
 
-    @Test
-    public void getEVinfoByUser(){
-        String userName = "seller";
-        List<EVinfo> evs = eVinfoService.getEVinfoByUser(userName);
-        for(EVinfo ev : evs){
-            System.out.println(ev.toString());
-        }
-    }
 
-    @Test
-    public void getEVinfoAccordingKind(){
-        String userName = "seller";
-        Map<String,List> map = eVinfoService.getEVinfoAsTreeStore(userName);
-        Set<String> keys = map.keySet();
-        for(String key : keys){
-            List<EVinfo> l_ev = map.get(key);
-            for(EVinfo ev : l_ev){
-                System.out.println(key+"  "+ev.getLicenseNumber());
-            }
-        }
-    }
 }

@@ -1,4 +1,4 @@
-package com.iwebirth.controller.responsemodel;
+package com.iwebirth.controller.requestmodel;
 
 import java.io.Serializable;
 

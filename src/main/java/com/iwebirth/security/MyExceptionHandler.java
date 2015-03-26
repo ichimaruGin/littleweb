@@ -19,7 +19,7 @@ public class MyExceptionHandler implements HandlerExceptionResolver {
 		Map<String, Object> model = new HashMap<String, Object>();  
         model.put("ex", ex);  
 		if(ex instanceof CustomException){
-			mav.setViewName("custom_error");
+			mav.setViewName("custom_error");  //custom_error.jsp
 			mav.addAllObjects(model);
 		}
 		return mav;

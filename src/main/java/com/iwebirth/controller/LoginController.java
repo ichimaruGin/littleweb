@@ -4,7 +4,6 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Random;
 
@@ -21,10 +20,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.iwebirth.controller.responsemodel.Authcode;
-import com.iwebirth.controller.responsemodel.LoginInfo;
+import com.iwebirth.controller.requestmodel.LoginInfo;
 import com.iwebirth.controller.responsemodel.LoginResponse;
 import com.iwebirth.controller.responsemodel.LoginStatus;
 import com.iwebirth.db.service.UserService;
@@ -62,7 +59,7 @@ public class LoginController {
 			loginInfo.show();
 			session.setMaxInactiveInterval(3600);
 			//LoginStatus status = (LoginStatus)session.getAttribute("login_status");		
-			if(loginInfo.getAuthcode().equals((String)session.getAttribute("auth_code"))){
+			if(loginInfo.getAuthcode().equals(session.getAttribute("auth_code"))){
 				loginResponse = userService.checkUser(loginInfo);
 				if(loginResponse.getResult().equals(StaticParam.LOGIN_RESPONSE_SUCCESS)){  //login success
 					LoginStatus newStatus = new LoginStatus(loginResponse.getUsername(),loginResponse.getLevel(),true);
@@ -133,7 +130,7 @@ public class LoginController {
         }         
         // randomCode用于保存随机产生的验证码，以便用户登录后进行验证。         
         StringBuffer randomCode = new StringBuffer();         
-        int red = 0, green = 0, blue = 0;         
+        int red, green, blue;
         // 随机产生codeCount数字的验证码。         
         for (int i = 0; i < codeCount; i++) {         
             // 得到随机产生的验证码数字。         

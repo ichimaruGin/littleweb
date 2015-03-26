@@ -49,7 +49,7 @@
 		</property>
 	</bean>
 
-	<!-- 事务管理器 -->
+	<!--&lt;!&ndash; 事务管理器 &ndash;&gt;-->
 	<bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
 		<property name="sessionFactory" ref="sessionFactory"/>
 	</bean>
@@ -57,13 +57,14 @@
 	<tx:advice id="transactionAdvice" transaction-manager="transactionManager">
 		<tx:attributes>
 			<!-- propagation属性指事务的传播行为 与事务控制相关  isolation指隔离级别，默认采用后端数据库的隔离级别  默认只在抛出运行时异常时回滚-->
-			<tx:method name="*" propagation="REQUIRED" isolation="DEFAULT" rollback-for="RuntimeException"/>  
+			<tx:method name="*" propagation="REQUIRED" isolation="DEFAULT" rollback-for="RuntimeException"/>
 		</tx:attributes>
 	</tx:advice>
 	<!-- AOP  -->
 	<aop:aspectj-autoproxy proxy-target-class="true"/>
 	<aop:config>
 		<aop:advisor advice-ref="transactionAdvice" pointcut="execution(* com.iwebirth.db.service.*.*(..))"/>
+        <aop:advisor advice-ref="transactionAdvice" pointcut="execution(* com.iwebirth.db.service.common.*.*(..))"/>
 	</aop:config>
 	
 	<!-- 根据Annotation来生成事务代理  要使用@Transactional必须要下面的声明-->

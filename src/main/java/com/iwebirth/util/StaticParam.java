@@ -10,8 +10,8 @@ public class StaticParam {
 	
 	//USER_LEVEL 用户等级
 	public static final String USER_LEVEL_ADMIN = "admin";
-	public static final String USER_LEVEL_NORMAL = "normal";
-	public static final String USER_LEVEL_PARENT = "parent";
+	public static final String USER_LEVEL_DEPARTMENT = "department";
+	public static final String USER_LEVEL_PERSONAL = "personal";
 	
 	//DEPARTMENT_STATUS 部门身份
 	public static final String DEPARTMENT_STATUS_EV_SELLER = "ev_seller";

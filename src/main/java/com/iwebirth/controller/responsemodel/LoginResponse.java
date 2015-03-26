@@ -9,7 +9,7 @@ public class LoginResponse {
 	
 	String result;
 	
-	String level;  //first check User.level ,then if User.level == "normal",then check the User.department.status
+	String level = "logout";  //first check User.level ,then if User.level == "department",then check the User.department.function
 	
 	boolean success = true;
 	

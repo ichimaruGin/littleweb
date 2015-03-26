@@ -1,91 +1,86 @@
 package com.iwebirth.db.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
-@Table(name="department")
+@Table(name = "department")
 public class Department {
-	@Id
-	@GeneratedValue
-	Integer id;
-	
-	//unique 
-	//this attribute is used to query~ eg.'select * from department where name = "SXFJ" '
-	@Column(name="NAME",nullable=false,unique=true,columnDefinition="varchar(255) not null")
-	String name;
-	
-	@Column(name="LOCATION",nullable=false,columnDefinition="varchar(255) not null")
-	String location;
-	
-	@Column(name="LATITUDE",nullable=false,columnDefinition="varchar(255) not null")
-	String latitude;
-	
-	@Column(name="LONGITUDE",nullable=false,columnDefinition="varchar(255) not null")
-	String longitude;
-	
-	@Column(name="STATUS",nullable=false)
-	String status;  //refer to StaticParam.java
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    Integer id;
 
-	public Integer getId() {
-		return id;
-	}
+    @Column(name = "name", nullable = false, unique = true)
+    String name;
 
-	public void setId(Integer id) {
-		this.id = id;
-	}
+    @Column(name = "location", nullable = false)
+    String location;
 
-	public String getName() {
-		return name;
-	}
+    @Column(name = "latitude", nullable = false)
+    String latitude;
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    @Column(name = "longitude", nullable = false)
+    String longitude;
 
-	public String getLocation() {
-		return location;
-	}
+    @Column(name = "function", nullable = false)
+    String function;  //refer to StaticParam.java DEPARTMENT_FUNCTION
 
-	public void setLocation(String location) {
-		this.location = location;
-	}
 
-	public String getLatitude() {
-		return latitude;
-	}
+    public Integer getId() {
+        return id;
+    }
 
-	public void setLatitude(String latitude) {
-		this.latitude = latitude;
-	}
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
-	public String getLongitude() {
-		return longitude;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public String getStatus() {
-		return status;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public void setStatus(String status) {
-		this.status = status;
-	}
+    public String getLongitude() {
+        return longitude;
+    }
 
-	public void setLongitude(String longitude) {
-		this.longitude = longitude;
-	}
-	public Department(){}
-	public Department(String name, String location,
-			String latitude, String longitude, String status) {
-		super();
-		this.name = name;
-		this.location = location;
-		this.latitude = latitude;
-		this.longitude = longitude;
-		this.status = status;
-	}
-	
+    public void setLongitude(String longitude) {
+        this.longitude = longitude;
+    }
+
+    public String getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(String latitude) {
+        this.latitude = latitude;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public String getFunction() {
+        return function;
+    }
+
+    public void setFunction(String function) {
+        this.function = function;
+    }
+
+    public Department() {
+    }
+
+    public Department(String name, String location, String latitude, String longitude, String function) {
+        this.name = name;
+        this.location = location;
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.function = function;
+    }
 }

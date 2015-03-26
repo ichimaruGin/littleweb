@@ -1,15 +1,10 @@
 package simpletest;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-
+import com.iwebirth.util.Jackson;
 import org.junit.Test;
 
-import com.iwebirth.controller.responsemodel.EVTreeResponseLeaf;
-import com.iwebirth.controller.responsemodel.EVTreeResponseNode;
-import com.iwebirth.controller.responsemodel.TreeResponseRoot;
-import com.iwebirth.util.Jackson;
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class ResponsemodelTests {

@@ -11,28 +11,24 @@ import org.springframework.web.servlet.ModelAndView;
 import com.iwebirth.controller.responsemodel.LoginStatus;
 import com.iwebirth.util.StaticParam;
 
+/**
+ * 返回名为level的页面
+ * **/
 @Controller
 public class ViewsController {
-	@RequestMapping(value="/{level}")
-	public
-	ModelAndView dispatcher(HttpSession session,ModelMap model,@PathVariable String level){
-		session.setMaxInactiveInterval(3600);
-		LoginStatus status = (LoginStatus)session.getAttribute("login_status");
-		ModelAndView mav = new ModelAndView();
-		if(status != null){	
-				model.put("username", status.getUsername());
-				if(level.equals(StaticParam.USER_LEVEL_ADMIN)){
-					mav.setViewName("admin");
-				}else if(level.equals(StaticParam.USER_LEVEL_PARENT)){
-					mav.setViewName("parent");
-				}else if(level.equals(StaticParam.DEPARTMENT_STATUS_EV_BUYER)){
-					mav.setViewName("ev_user");
-				}else if(level.equals(StaticParam.DEPARTMENT_STATUS_EV_SELLER)){
-					mav.setViewName("ev_seller");
-				}			
-		}else{
-			mav = new ModelAndView("redirect:/login");
-		}
-		return mav;
-	}
+
+    @RequestMapping(value = "/{level}")
+    public ModelAndView viewDispatcher(HttpSession session, ModelMap model, @PathVariable String level) {
+        session.setMaxInactiveInterval(3600*12);
+        LoginStatus status = (LoginStatus) session.getAttribute("login_status");
+        ModelAndView mav = new ModelAndView();
+        if (status != null && level != null) {
+            model.put("username", status.getUsername());
+            mav.setViewName(level);  //http://contextPath()/level
+        } else {
+            mav = new ModelAndView("redirect:/login");
+        }
+        return mav;
+    }
+
 }

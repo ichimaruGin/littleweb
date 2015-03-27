@@ -57,8 +57,5 @@ public class UserService {
         return loginResponse;
     }
 
-    public int addUser(User user) {
-        return commonDao.insertSingleObject(user);
-    }
 
 }

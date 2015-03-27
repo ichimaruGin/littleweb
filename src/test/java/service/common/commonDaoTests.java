@@ -1,8 +1,9 @@
-package HiernateTests.dao;
+package service.common;
 
 import com.iwebirth.db.model.User;
 import com.iwebirth.db.service.common.CommonDao;
 import com.iwebirth.util.PrintTools;
+import com.iwebirth.util.StaticParam;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,8 +32,24 @@ public class commonDaoTests {
     }
 
     @Test
+    public void insertSingleObject(){
+        User user = new User("tiantian","adsfgh", StaticParam.USER_LEVEL_PERSONAL, 0);
+        commonDao.insertSingleObject(user);
+    }
+
+    @Test
+    public void getSingleObjectById(){
+        Class clazz = User.class;
+        Integer id = 1;
+        User user = (User)commonDao.getSingleObjectById(clazz,1);
+        user.show();
+    }
+
+    @Test
     public void getAllObejct(){
         List resList = commonDao.getAllObject(User.class);
         PrintTools.printList(resList);
     }
+
+
 }

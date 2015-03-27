@@ -21,7 +21,7 @@
 						el:{
 							click:function(){
 								
-							},
+							}
 						},
 						afterrender:{
 							fn:function(me){

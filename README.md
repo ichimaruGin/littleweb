@@ -35,3 +35,5 @@
 *采用session保存 用户信息及用户登陆状态(UserStatus)
 *LoginResult转为json后作为登录验证ajax的返回值
 
+##每次写完代码记得用dump_littleweb.bat脚本 保存一下数据库
+

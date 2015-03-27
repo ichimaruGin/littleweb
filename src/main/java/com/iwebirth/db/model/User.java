@@ -24,12 +24,15 @@ public class User {
 //	@JoinColumn(name="DEPARTMENT_ID",referencedColumnName="id")
 //	Department department;
 
-    @Column(name = "department_id")
+    @Column(name = "department_id", nullable = false)
     Integer departmentId;
 
     //时间为s级
     @Column(name = "register_time", nullable = false)
     Integer registerTime = (int)(System.currentTimeMillis() / 1000);
+
+    @Column(name = "is_valid",nullable = false)
+    Boolean isValid = true;
 
     public Integer getId() {
         return id;
@@ -79,13 +82,26 @@ public class User {
         this.registerTime = registerTime;
     }
 
+    public Boolean getIsValid() {
+        return isValid;
+    }
+
+    public void setIsValid(Boolean isValid) {
+        this.isValid = isValid;
+    }
+
     public User(){}
 
-    public User(String username, String password, String userLevel, Integer departmentId, Integer registerTime) {
+    public User(String username, String password, String userLevel, Integer departmentId) {
         this.username = username;
         this.password = password;
         this.userLevel = userLevel;
         this.departmentId = departmentId;
-        this.registerTime = registerTime;
+    }
+
+    public void show(){
+        System.out.println("id-->"+id+"\nusername--->"+username+"\npassword--->"+
+                password+"\nuserLevel--->"+userLevel+"\ndepartmentId--->"+departmentId
+                +"\nregisterTime--->"+registerTime+"\nisValid--->"+isValid);
     }
 }

@@ -25,4 +25,5 @@ public class StaticParam {
 	public static final String EVINFO_KIND_KINDTHREE = "kind_three";
 	public static final String EVINFO_KIND_KINDFOUR = "kind_four";
 	public static final String EVINFO_KIND_KINDFIVE = "kind_five";
+
 }

@@ -21,6 +21,7 @@ public class CommonDao {
     @Autowired
     SessionFactory sessionFactory;
 
+
     /**
      * @param object 插入的对象
      *               *
@@ -40,7 +41,6 @@ public class CommonDao {
     /**
      * @param c  Object.getClass()
      * @param id Object's id
-     *           *
      */
     public Object getSingleObjectById(Class c, int id) {
         Session session;
@@ -73,4 +73,5 @@ public class CommonDao {
         }
         return resList;
     }
+
 }

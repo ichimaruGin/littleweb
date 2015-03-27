@@ -161,10 +161,11 @@ CREATE TABLE `user` (
   `password` varchar(20) NOT NULL,
   `user_level` varchar(10) NOT NULL,
   `department_id` int(11) DEFAULT NULL,
-  `register_time` bigint(20) NOT NULL,
+  `register_time` int(11) NOT NULL,
+  `is_valid` tinyint(1) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `UK_j8pqu7twm7ekoe3orxctxr9f4` (`username`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -173,6 +174,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
+INSERT INTO `user` VALUES (1,'ichimaruGin','1234rewQ','admin',0,1427358140,1),(2,'jason','1234rewQ','personal',0,1427358140,1),(3,'tiantian','123456','personal',0,1427457899,1);
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -217,4 +219,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-03-23 16:09:19
+-- Dump completed on 2015-03-27 20:38:42

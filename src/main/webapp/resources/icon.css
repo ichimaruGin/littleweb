@@ -4,3 +4,9 @@
 .treeleaf {
 	background-image: url("icons/blue_book.png") !important;
 }
+.iconfont-update{
+    background-image: url("icons/iconfont-update.png") !important;
+}
+.iconfont-delete{
+     background-image: url("icons/iconfont-delete.png") !important;
+ }

@@ -37,3 +37,10 @@
 
 ##每次写完代码记得用dump_littleweb.bat脚本 保存一下数据库
 
+##new relic
+unzip newrelic-java-3.12.1.zip -d $tomcat-root-path
+cd $tomcat-root-path/newrelic
+java -jar newrelic.jar install
+# modify newrelic.yml -> change app name
+# restart tomcat process
+

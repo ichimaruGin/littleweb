@@ -5,8 +5,8 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/resources/ext-theme-neptune-all.css">
+    <link rel="shortcut icon" href="<%=request.getContextPath()%>/resources/icons/favicon.ico">
     <script type="text/javascript" src="<%=request.getContextPath()%>/extjs/ext-all-debug.js"></script>
-    <script type="text/javascript" src="<%=request.getContextPath()%>/extjs/ext-lang-zh_CN.js"></script>
     <title>index</title>
 </head>
 <body>

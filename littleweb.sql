@@ -165,7 +165,7 @@ CREATE TABLE `user` (
   `is_valid` tinyint(1) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `UK_j8pqu7twm7ekoe3orxctxr9f4` (`username`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -174,7 +174,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (1,'ichimaruGin','1234rewQ','admin',0,1427358140,1),(2,'jason','1234rewQ','personal',0,1427358140,1),(3,'tiantian','123456','personal',0,1427457899,1);
+INSERT INTO `user` VALUES (1,'ichimaruGin','1234rewQ','admin',0,1427358140,1),(2,'jason','1234田园6','personal',0,1427358140,0),(3,'tiantian','1234563654756','personal',0,1427457899,0),(4,'user三大神','pass','admin',0,1427872097,0),(6,'user','pass','personal',0,1427872188,0),(7,'userds','pass','department',0,1427872625,0),(8,'user多撒','pass','department',0,1427873200,0),(9,'user多撒1','pass','department',0,1427873206,0),(10,'user512','pass','personal',0,1427873656,1),(11,'user293','pass','personal',0,1427873660,1);
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -219,4 +219,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-03-27 20:38:42
+-- Dump completed on 2015-04-01 15:36:18

@@ -76,7 +76,6 @@ public class AdminController {
                     user.setUserLevel(request.getParameter("userLevel"));
                     user.setDepartmentId(Integer.parseInt(request.getParameter("departmentId")));
                     user.setIsValid(Boolean.parseBoolean(request.getParameter("isValid")));
-                    user.show();
                     String res = CRUDEvent.getNameByValue(adminService.updateUser(user));
                     ajaxResult.setResult(res);
                     System.out.println(res);
@@ -90,4 +89,29 @@ public class AdminController {
         return ajaxResult;
     }
 
+
+    @RequestMapping(value={"/delete/{obj_id}"},method = RequestMethod.POST)
+    public @ResponseBody
+    AjaxResult deleteRecord(@PathVariable int obj_id, HttpServletRequest request, HttpSession session) throws UnsupportedEncodingException {
+        LoginStatus status = (LoginStatus)session.getAttribute("login_status");
+        if(status == null || !status.getAlive())
+            return null;
+        request.setCharacterEncoding("utf-8");
+        AjaxResult ajaxResult = new AjaxResult(false);
+        try{
+            switch(obj_id){
+                case user_id:
+                    int id = Integer.parseInt(request.getParameter("id"));
+                    String res = CRUDEvent.getNameByValue(adminService.deleteUserById(id));
+                    ajaxResult.setResult(res);
+                    System.out.println(res);
+                    break;
+                case department_id:
+                    break;
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        return ajaxResult;
+    }
  }

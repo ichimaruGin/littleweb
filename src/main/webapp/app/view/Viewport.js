@@ -3,7 +3,6 @@ Ext.define('BS.view.Viewport', {
     requires:[
         'BS.view.Main',
     ],
-
 	layout:{
 		type:'hbox',
 		//align:'stretch',

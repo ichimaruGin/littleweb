@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.6.10, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 5.6.14, for Win64 (x86_64)
 --
 -- Host: localhost    Database: littleweb
 -- ------------------------------------------------------
--- Server version	5.6.10
+-- Server version	5.6.14
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -31,7 +31,7 @@ CREATE TABLE `department` (
   `function` varchar(20) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `UK_departmentname` (`name`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -40,6 +40,7 @@ CREATE TABLE `department` (
 
 LOCK TABLES `department` WRITE;
 /*!40000 ALTER TABLE `department` DISABLE KEYS */;
+INSERT INTO `department` VALUES (1,'co1','aclbaysbliq','120.123456','30.21421','ev_seller'),(2,'co2','aclbaysbliq','120.123456','30.21421','ev_seller');
 /*!40000 ALTER TABLE `department` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -174,7 +175,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (1,'ichimaruGin','1234rewQ','admin',0,1427358140,1),(2,'jason','1234田园6','personal',0,1427358140,0),(3,'tiantian','1234563654756','personal',0,1427457899,0),(4,'user三大神','pass','admin',0,1427872097,0),(6,'user','pass','personal',0,1427872188,0),(7,'userds','pass','department',0,1427872625,0),(8,'user多撒','pass','department',0,1427873200,0),(9,'user多撒1','pass','department',0,1427873206,0),(10,'user512','pass','personal',0,1427873656,1),(11,'user293','pass','personal',0,1427873660,1);
+INSERT INTO `user` VALUES (1,'ichimaruGin','1234rewQ','admin',0,1427358140,1),(2,'jason','1234田园6','personal',0,1427358140,0),(3,'tiantian','1234563654756','personal',0,1427457899,0),(4,'user三大神','pass','admin',0,1427872097,0),(6,'user','pass','personal',0,1427872188,0),(7,'userds','pass','department',0,1427872625,0),(8,'user1','pass','department',0,1427873200,0),(9,'user2','pass','department',0,1427873206,0),(10,'user512','pass','personal',0,1427873656,1),(11,'user6','pass','personal',0,1427873660,1);
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -219,4 +220,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-04-01 15:36:18
+-- Dump completed on 2015-04-01 22:38:12

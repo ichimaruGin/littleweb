@@ -38,7 +38,7 @@ public class LoginController {
 	//baseURL/login
 	@RequestMapping
 	public
-	ModelAndView index(HttpSession session,ModelMap model){
+	ModelAndView index(HttpSession session){
 		session.setMaxInactiveInterval(3600);
 		ModelAndView mav = new ModelAndView("index");
 		return mav;
@@ -97,8 +97,8 @@ public class LoginController {
 	    int fontHeight;         
 	    int codeY;         
 	    char[] codeSequence = { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J',         
-	            'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W',         
-	            'X', 'Y', 'Z', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' };          
+	            'K', 'L', 'M', 'N', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W',
+	            'X', 'Y', 'Z', '1', '2', '3', '4', '5', '6', '7', '8', '9' };
         // 将配置的信息转换成数值                
         x = width / (codeCount + 1);         
         fontHeight = height - 2;         

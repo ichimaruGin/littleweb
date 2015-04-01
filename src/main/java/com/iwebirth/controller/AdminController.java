@@ -2,6 +2,7 @@ package com.iwebirth.controller;
 
 import com.iwebirth.controller.responsemodel.AjaxResult;
 import com.iwebirth.controller.responsemodel.LoginStatus;
+import com.iwebirth.db.model.Department;
 import com.iwebirth.db.model.User;
 import com.iwebirth.db.service.AdminService;
 import com.iwebirth.db.service.CRUDEvent;
@@ -48,6 +49,8 @@ public class AdminController {
         Class clazz = null;
         if(obj_id == user_id)
             clazz = User.class;
+        else if(obj_id == department_id)
+            clazz = Department.class;
         else
             ;
         List list = commonDao.getAllObject(clazz);
@@ -88,7 +91,6 @@ public class AdminController {
         }
         return ajaxResult;
     }
-
 
     @RequestMapping(value={"/delete/{obj_id}"},method = RequestMethod.POST)
     public @ResponseBody

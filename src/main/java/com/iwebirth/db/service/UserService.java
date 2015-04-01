@@ -38,7 +38,9 @@ public class UserService {
             } else {
                 if (!dUser.getPassword().equals(loginInfo.getPassword()))
                     loginResponse.setResult(StaticParam.LOGIN_RESPONSE_FAIL_PASSWD_ERROR); //passwd error
-                else {
+                else if (!dUser.getIsValid()) {
+                    loginResponse.setResult(StaticParam.LOGIN_RESPONSE_FAIL_VALID_ERROR); //valid error
+                } else {
                     loginResponse.setResult(StaticParam.LOGIN_RESPONSE_SUCCESS);
                     if (StaticParam.USER_LEVEL_DEPARTMENT.equals(dUser.getUserLevel())) {
                         //"department" 企业用户登陆

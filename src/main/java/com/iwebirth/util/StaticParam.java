@@ -6,9 +6,9 @@ public class StaticParam {
 	public static final String LOGIN_RESPONSE_SUCCESS = "SUCCESS";
 	public static final String LOGIN_RESPONSE_FAIL_AUTHCODE = "FAIL_AUTHCODE";
 	public static final String LOGIN_RESPONSE_FAIL_USER_ERROR = "FAIL_USER_ERROR";
-	public static final String LOGIN_RESPONSE_FAIL_PASSWD_ERROR = "FAIL_PASSWD_ERROR";	
-	
-	//USER_LEVEL 用户等级
+	public static final String LOGIN_RESPONSE_FAIL_PASSWD_ERROR = "FAIL_PASSWD_ERROR";
+    public static final String LOGIN_RESPONSE_FAIL_VALID_ERROR = "FAIL_VALID_ERROR";
+    //USER_LEVEL 用户等级
 	public static final String USER_LEVEL_ADMIN = "admin";
 	public static final String USER_LEVEL_DEPARTMENT = "department";
 	public static final String USER_LEVEL_PERSONAL = "personal";

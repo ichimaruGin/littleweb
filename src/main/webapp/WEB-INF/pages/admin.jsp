@@ -19,18 +19,21 @@
 <body>
 <script>
     Ext.onReady(function () {
+        Ext.tip.QuickTipManager.init();
+
         var naviPanel = Ext.create('Ext.panel.Panel', {
-            width: '25%',
-            region: 'west',
+            height: '8%',
+            region: 'north',
             defaultType: 'button',
             defaults: {
-                width: 200,
-                style: 'margin-top:10px',
+                width: 180,
+                style: 'margin-left:10px',
                 anchor: '95%'
             },
             layout: {
-                type: 'vbox',
-                align: 'center'
+                type: 'hbox',
+                align: 'middle',
+                pack: 'start'
             },
             items: [{
                 text: '账号密码管理',
@@ -54,26 +57,7 @@
 
         var tabPanel = Ext.create('Ext.tab.Panel', {
             region: 'center',
-            plain: true,
-            border: true,
-            defaults: {
-                bodyPadding: 10
-            },
-
-            listeners: {
-                add: {
-                    scope:this,
-                    fn:function(panel,tabPanel,pos){
-                        //console.log('add a panel on '+ pos);
-                    }
-                },
-                remove: {
-                    scope:this,
-                    fn:function(ct,panel){
-                        //console.log('remove a panel',ct,panel);
-                    }
-                }
-            }
+            border: true
         });
         var mainPanel = Ext.create('Ext.panel.Panel', {
             width: 1200,
@@ -156,6 +140,7 @@
                 },
                 tbar: [
                     {xtype: 'button', scope:this, text: '新增', width: 100, handler: this.onAddUser},
+                    {xtype: 'button', scope:this, text: '刷新', width: 100, handler: this.loadStore},
                 ],
                 store: Ext.create('user_store_admin', {}),
                 columns: [
@@ -251,6 +236,10 @@
                     isValid: true
                 });
                 store.insert(0, rec);
+                this.cellEditing.startEditByPosition({
+                    row : 0,
+                    column: 1
+                })
             }
         },
         autoCommit: function(editor,e){

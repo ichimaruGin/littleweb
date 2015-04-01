@@ -1,10 +1,8 @@
 package com.iwebirth.db.service.common;
 
-import com.iwebirth.db.model.User;
 import com.iwebirth.db.service.CRUDEvent;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

@@ -80,7 +80,7 @@
                 text: '登录',
                 itemId: 'login',
                 handler: function () {
-                    login_submit(loginform);
+                    login_submit(loginform,authcode);
                 }
             }]
         });
@@ -89,7 +89,7 @@
             key: Ext.EventObject.ENTER,
             //key: "arnt",
             fn: function () {
-                login_submit(loginform);
+                login_submit(loginform,authcode);
             }
         });
         var mainpanel = Ext.create("Ext.panel.Panel", {
@@ -134,7 +134,7 @@
         //loginform.getEl().dom.style.marginTop = '20px';
     });
     //form validation && submit
-    function login_submit(loginform) {
+    function login_submit(loginform,authcode) {
         if (loginform.isValid()) {
             loginform.submit({
                 clientValidation: true,
@@ -155,6 +155,9 @@
                         }
                         if (result == 'FAIL_PASSWD_ERROR') {
                             Ext.Msg.show({title: '登录验证', msg: '密码错误', buttons: Ext.Msg.OK, icon: Ext.Msg.INFO});
+                        }
+                        if (result == 'FAIL_VALID_ERROR') {
+                            Ext.Msg.show({title: '登录验证', msg: '账号无效', buttons: Ext.Msg.OK, icon: Ext.Msg.INFO});
                         }
                         authcode.setSrc(authcodeBaseUrl + new Date().getMilliseconds()); //重载验证码
                     }

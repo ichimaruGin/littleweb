@@ -10,16 +10,15 @@ import com.iwebirth.db.service.common.CommonDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.management.modelmbean.ModelMBean;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.UnsupportedEncodingException;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by YY_410 on 2015/3/26.
@@ -79,11 +78,17 @@ public class AdminController {
                     user.setUserLevel(request.getParameter("userLevel"));
                     user.setDepartmentId(Integer.parseInt(request.getParameter("departmentId")));
                     user.setIsValid(Boolean.parseBoolean(request.getParameter("isValid")));
-                    String res = CRUDEvent.getNameByValue(adminService.updateUser(user));
-                    ajaxResult.setResult(res);
-                    System.out.println(res);
+                    ajaxResult.setResult(CRUDEvent.getNameByValue(adminService.updateObject(user)));
                     break;
                 case department_id:
+                    Department depart = new Department();
+                    depart.setId(Integer.parseInt(request.getParameter("id")));
+                    depart.setName(request.getParameter("name"));
+                    depart.setLocation(request.getParameter("location"));
+                    depart.setFunction(request.getParameter("function"));
+                    depart.setLatitude(request.getParameter("latitude"));
+                    depart.setLongitude(request.getParameter("longitude"));
+                    ajaxResult.setResult(CRUDEvent.getNameByValue(adminService.updateObject(depart)));
                     break;
             }
         }catch(Exception e){

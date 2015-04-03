@@ -84,10 +84,6 @@
             },
             items: [mainPanel]
         });
-
-
-
-
     });
     Ext.define('user_model_admin', {
         extend: 'Ext.data.Model',
@@ -247,6 +243,7 @@
         },
         onUpdate: function (grid, rowIndex) {
             var rec = grid.getStore().getAt(rowIndex);
+            console.log(rec.data);
             Ext.Ajax.request({
                 url: '<%=request.getContextPath()%>/admin/update/0',
                 params: rec.data,
@@ -368,7 +365,11 @@
                     dataIndex: 'location',
                     sotable: false,
                     flex: 1,
-                    editor:{xtype:'textfield'}
+                    editor:{xtype:'textfield'},
+                    renderer:function(value,meta,record){
+                        meta.tdAttr = 'data-qtip="'+value+'"';
+                        return value;
+                    }
                 },{
                     text: '企业类型',
                     dataIndex: 'function',
@@ -425,7 +426,6 @@
         },
         onAddDepartment: function(){
             var store = this.getStore();
-            console.log(store.getAt(0));
             if(store.getAt(0).data['id'] == 0)
             //防止超过1次的新增导致grid选择的错误
                 alert('先把之前的save完成');
@@ -434,9 +434,9 @@
                     id: 0,
                     name: 'cotd' + parseInt(1000*Math.random()+1),
                     location: 'asjcaubcaiaern',
-                    function: 'personal',
-                    latitude: 0,
-                    longitude: 0
+                    function: 'ev_seller',
+                    latitude: '0',
+                    longitude: '0'
                 });
                 store.insert(0, rec);
                 this.cellEditing.startEditByPosition({

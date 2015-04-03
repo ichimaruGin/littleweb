@@ -1,10 +1,10 @@
 package com.iwebirth.db.service;
 
+import com.iwebirth.db.model.Department;
 import com.iwebirth.db.model.User;
 import com.iwebirth.db.service.common.CommonDao;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,29 +19,53 @@ public class AdminService {
     @Autowired
     CommonDao commonDao;
     /**
-     * User update & add
-     * 对password，userLevel，departmentId，isValid进行更新
-     * 或者对新的user进行save
+     * 对Admin中的对象进行update or save
      * *
      */
-    public int updateUser(User user) {
-        //Session session = sessionFactory.getCurrentSession();
+    public int updateObject(Object obj) {
         int res = CRUDEvent.UPDATE_SUCCESS.getValue();
-        try {
-            Integer id = user.getId();
-            if(id == 0){
-                //save
-                res = commonDao.insertSingleObject(user);
-            }else{
-                //update
-                User dUser = (User)commonDao.getSingleObjectById(User.class,id);
-                dUser.setUsername(user.getUsername());
-                dUser.setPassword(user.getPassword());
-                dUser.setUserLevel(user.getUserLevel());
-                dUser.setIsValid(user.getIsValid());
-                dUser.setDepartmentId(user.getDepartmentId());
+        Class clazz = obj.getClass();
+        try{
+            if(clazz == User.class){
+                System.out.println("user update");
+                User user = (User)obj;
+                Integer id = user.getId();
+                if(id == 0){
+                    //save
+                    res = commonDao.insertSingleObject(user);
+                }else{
+                    //update
+                    User dUser = (User)commonDao.getSingleObjectById(User.class,id);
+                    if(dUser == null)
+                        res = CRUDEvent.UPDATE_EXCEPTION.getValue();
+                    else{
+                        dUser.setUsername(user.getUsername());
+                        dUser.setPassword(user.getPassword());
+                        dUser.setUserLevel(user.getUserLevel());
+                        dUser.setIsValid(user.getIsValid());
+                        dUser.setDepartmentId(user.getDepartmentId());
+                    }
+                }
+            }else if(clazz == Department.class){
+                System.out.println("Department update");
+                Department department = (Department)obj;
+                Integer id = department.getId();
+                if(id == 0){
+                    res = commonDao.insertSingleObject(department);
+                }else{
+                    Department dDepart = (Department)commonDao.getSingleObjectById(clazz,id);
+                    if(dDepart == null)
+                        res = CRUDEvent.UPDATE_EXCEPTION.getValue();
+                    else{
+                        dDepart.setName(department.getName());
+                        dDepart.setLocation(department.getLocation());
+                        dDepart.setFunction(department.getFunction());
+                        dDepart.setLatitude(department.getLatitude());
+                        dDepart.setLongitude(department.getLongitude());
+                    }
+                }
             }
-        } catch (Exception e) {
+        }catch (Exception e) {
             e.printStackTrace();
             res = CRUDEvent.UPDATE_EXCEPTION.getValue();
         }
@@ -68,4 +92,5 @@ public class AdminService {
         }
         return res;
     }
+
 }

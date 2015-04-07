@@ -38,13 +38,13 @@
                 text: '账号密码管理',
                 handler: function () {
                     var tab = tabPanel.down('usergrid');
-                    if(!tab){
-                        tab = Ext.create('user_grid_admin',{
+                    if (!tab) {
+                        tab = Ext.create('user_grid_admin', {
                             closeAction: 'destroy'
                         });
                         tabPanel.add(tab);
                         tabPanel.setActiveTab(tab);
-                    }else{
+                    } else {
                         tabPanel.setActiveTab(tab);
                     }
                 }
@@ -52,13 +52,13 @@
                 text: '企业信息管理',
                 handler: function () {
                     var tab = tabPanel.down('departmentgrid');
-                    if(!tab){
-                        tab = Ext.create('department_grid_admin',{
+                    if (!tab) {
+                        tab = Ext.create('department_grid_admin', {
                             closeAction: 'destroy'
                         });
                         tabPanel.add(tab);
                         tabPanel.setActiveTab(tab);
-                    }else{
+                    } else {
                         tabPanel.setActiveTab(tab);
                     }
                 }
@@ -113,7 +113,7 @@
     });
     Ext.define('user_grid_admin', {
         extend: 'Ext.grid.Panel',
-        alias:'widget.usergrid',
+        alias: 'widget.usergrid',
         requires: [
             'Ext.grid.column.Action'
         ],
@@ -127,10 +127,10 @@
         },
         initComponent: function () {
             this.cellEditing = new Ext.grid.plugin.CellEditing({
-                clicksToEdit:1
+                clicksToEdit: 2
             });
-            this.cellEditing.on('validateedit',function(editor,e){
-                if(e.originalValue == e.value)
+            this.cellEditing.on('validateedit', function (editor, e) {
+                if (e.originalValue == e.value)
                     return false;
                 else
                     e.record.commit();  //important,不加这句话会出现点着点着就点不动的bug
@@ -141,9 +141,9 @@
                     selType: 'cellmodel'
                 },
                 tbar: [
-                    {xtype: 'button', scope:this, text: '新增', width: 100, handler: this.onAddUser},
-                    {xtype: 'button', scope:this, text: '刷新', width: 100, handler: this.loadStore},
-                    {xtype: 'button', scope:this, text: '显示部门', width: 100, handler: this.showDepartment}
+                    {xtype: 'button', scope: this, text: '新增', width: 100, handler: this.onAddUser},
+                    {xtype: 'button', scope: this, text: '刷新', width: 100, handler: this.loadStore},
+                    {xtype: 'button', scope: this, text: '显示部门', width: 100, handler: this.showDepartment}
                 ],
                 store: Ext.create('user_store_admin', {}),
                 columns: [
@@ -152,7 +152,7 @@
                         text: '用户名',
                         dataIndex: 'username',  //不许修改
                         sortable: false,
-                        editor:{xtype: 'textfield'}
+                        editor: {xtype: 'textfield'}
                     },
                     {
                         text: '密码',
@@ -165,13 +165,13 @@
                         dataIndex: 'userLevel',
                         sortable: false,
                         editor: {
-                            xtype:'combo',
+                            xtype: 'combo',
                             store: Ext.create('Ext.data.Store', {
                                 fields: ['name', 'value'],
-                                data : [
-                                    {"name":"admin", "value":"admin"},
-                                    {"name":"personal", "value":"personal"},
-                                    {"name":"department", "value":"department"}
+                                data: [
+                                    {"name": "admin", "value": "admin"},
+                                    {"name": "personal", "value": "personal"},
+                                    {"name": "department", "value": "department"}
                                 ]
                             }),
                             querymode: 'local',
@@ -192,17 +192,17 @@
                         //menuDisabled: true,
                         text: '更新或保存',
                         xtype: 'actioncolumn',
-                        align:'center',
+                        align: 'center',
                         items: [{
                             iconCls: 'iconfont-update',
                             tooltip: '提交修改',
                             handler: this.onUpdate
                         }]
-                    },{
+                    }, {
                         //menuDisabled: true,
                         text: '失效',
                         xtype: 'actioncolumn',
-                        align:'center',
+                        align: 'center',
                         items: [{
                             iconCls: 'iconfont-delete',
                             tooltip: '删除记录',
@@ -217,21 +217,19 @@
                 single: true
             });
         },
-        loadStore:function(){
-            this.getStore().load({
-
-            });
+        loadStore: function () {
+            this.getStore().load({});
         },
         //这边有个坑，就是方法名不能简单地写成OnAdd，否则会直接执行这个函数(估计是覆盖了原有方法)
         onAddUser: function () {
             var store = this.getStore();
-            if(store.getAt(0).data['id'] == 0)
-                //防止超过1次的新增导致grid选择的错误
+            if (store.getAt(0).data['id'] == 0)
+            //防止超过1次的新增导致grid选择的错误
                 alert('先把之前的save完成');
-            else{
+            else {
                 var rec = Ext.create('user_model_admin', {
                     id: 0,
-                    username: 'user'+parseInt(1000*Math.random()+1),
+                    username: 'user' + parseInt(1000 * Math.random() + 1),
                     password: 'pass',
                     userLevel: 'personal',
                     departmentId: 0,
@@ -240,7 +238,7 @@
                 });
                 store.insert(0, rec);
                 this.cellEditing.startEditByPosition({
-                    row : 0,
+                    row: 0,
                     column: 1
                 })
             }
@@ -262,7 +260,7 @@
                             buttons: Ext.Msg.OK
                         });
                         grid.getStore().reload();
-                    }else if(obj.result == 'INSERT_SUCCESS'){
+                    } else if (obj.result == 'INSERT_SUCCESS') {
                         Ext.Msg.show({
                             title: 'save',
                             msg: '保存完成',
@@ -270,7 +268,7 @@
                             buttons: Ext.Msg.OK
                         });
                         grid.getStore().reload();
-                    } else{
+                    } else {
                         Ext.Msg.show({msg: '失败', buttons: Ext.Msg.OK});
                     }
                 },
@@ -290,12 +288,12 @@
                     if (obj.result == 'UPDATE_SUCCESS') {
                         Ext.Msg.show({
                             title: 'update',
-                            msg: 'DELETE_SUCCESS'+'@id='+rec.data.id,
+                            msg: 'DELETE_SUCCESS' + '@id=' + rec.data.id,
                             icon: Ext.Msg.INFO,
                             buttons: Ext.Msg.OK
                         });
                         grid.getStore().reload();
-                    }else{
+                    } else {
                         Ext.Msg.show({msg: '失败', buttons: Ext.Msg.OK});
                     }
                 },
@@ -304,31 +302,30 @@
                 }
             });
         },
-        showDepartment:function(){
+        showDepartment: function () {
             var store = this.getStore();
             var grid = this;
             var records = grid.getSelectionModel().getSelection();
-            if(records.length == 0)
-                Ext.Msg.show({title:'显示部门detail',msg:'请选中需要显示的那一行',icon: Ext.Msg.INFO, buttons: Ext.Msg.OK});
-            else{
-                console.log(records[0]);
+            if (records.length == 0)
+                Ext.Msg.show({title: '显示部门detail', msg: '请选中需要显示的那一行', icon: Ext.Msg.INFO, buttons: Ext.Msg.OK});
+            else {
                 var id = records[0].data.departmentId;
-                if(id == 0)
+                if (id == 0)
                     alert('这是一个特别的身份，无所属部门');
-                else{
+                else {
                     Ext.Ajax.request({
-                        url: '<%=request.getContextPath()%>/admin/others/single/1/'+id,
-                        success:function(response){
+                        url: '<%=request.getContextPath()%>/admin/others/single/1/' + id,
+                        success: function (response) {
                             var json = Ext.JSON.decode(response.responseText);
                             console.log(json);
                             Ext.Msg.show({
-                                title:'部门信息',
-                                msg: '<h4>用户:'+records[0].data.username+'</h4>'+'部门名字:'+json.name+'<br/>部门地址:'+json.location,
+                                title: '部门信息',
+                                msg: '<h4>用户:' + records[0].data.username + '</h4>' + '部门名字:' + json.name + '<br/>部门地址:' + json.location,
                                 icon: Ext.Msg.INFO,
                                 buttons: Ext.Msg.OK
                             });
                         },
-                        failure:function(){
+                        failure: function () {
                             alert('服务器响应失败');
                         }
                     });
@@ -336,29 +333,29 @@
             }
         }
     });
-    Ext.define('department_model_admin',{
+    Ext.define('department_model_admin', {
         extend: 'Ext.data.Model',
-        fields:[
-            {name:'name',type: 'string'},
-            {name:'location',type: 'string'},
-            {name:'function',type:'string'},
-            {name:'latitude',type:'string'},
-            {name:'longitude',type:'string'}]
+        fields: [
+            {name: 'name', type: 'string'},
+            {name: 'location', type: 'string'},
+            {name: 'function', type: 'string'},
+            {name: 'latitude', type: 'string'},
+            {name: 'longitude', type: 'string'}]
     });
-    Ext.define('department_store_admin',{
-        extend:'Ext.data.Store',
+    Ext.define('department_store_admin', {
+        extend: 'Ext.data.Store',
         model: 'department_model_admin',
-        proxy:{
-            type:'ajax',
+        proxy: {
+            type: 'ajax',
             url: '<%=request.getContextPath()%>/admin/query/1',
-            reader:{
-                type:'json'
+            reader: {
+                type: 'json'
             }
         }
     });
-    Ext.define('department_grid_admin',{
+    Ext.define('department_grid_admin', {
         extend: 'Ext.grid.Panel',
-        alias:'widget.departmentgrid',
+        alias: 'widget.departmentgrid',
         requires: [
             'Ext.grid.column.Action'
         ],
@@ -370,73 +367,73 @@
             stripeRow: true,
             enableTextSelection: true
         },
-        initComponent:function(){
+        initComponent: function () {
             this.cellEditing = new Ext.grid.plugin.CellEditing({
-                clicksToEdit:1
+                clicksToEdit: 1
             });
-            this.cellEditing.on('validateedit',function(editor,e){
-                if(e.value == e.originalValue)
+            this.cellEditing.on('validateedit', function (editor, e) {
+                if (e.value == e.originalValue)
                     return false;
                 else
                     e.record.commit();
             });
-            Ext.apply(this,{
+            Ext.apply(this, {
                 plugins: [this.cellEditing],
                 selModel: {
                     selType: 'cellmodel'
                 },
                 tbar: [
-                    {xtype: 'button', scope:this, text: '新增', width: 100, handler: this.onAddDepartment},
-                    {xtype: 'button', scope:this, text: '刷新', width: 100, handler: this.loadStore}
+                    {xtype: 'button', scope: this, text: '新增', width: 100, handler: this.onAddDepartment},
+                    {xtype: 'button', scope: this, text: '刷新', width: 100, handler: this.loadStore}
                 ],
-                store: Ext.create('department_store_admin',{}),
-                columns:[{
-                    text:'序号',
-                    dataIndex:'id'
-                },{
+                store: Ext.create('department_store_admin', {}),
+                columns: [{
+                    text: '序号',
+                    dataIndex: 'id'
+                }, {
                     text: '企业名',
                     dataIndex: 'name',  //不许修改
                     sotable: false,
-                    editor:{xtype: 'textfield'}
-                },{
+                    editor: {xtype: 'textfield'}
+                }, {
                     text: '详细地址',
                     dataIndex: 'location',
                     sotable: false,
                     flex: 1,
-                    editor:{xtype:'textfield'},
-                    renderer:function(value,meta,record){
-                        meta.tdAttr = 'data-qtip="'+value+'"';
+                    editor: {xtype: 'textfield'},
+                    renderer: function (value, meta, record) {
+                        meta.tdAttr = 'data-qtip="' + value + '"';
                         return value;
                     }
-                },{
+                }, {
                     text: '企业类型',
                     dataIndex: 'function',
                     editor: {
-                        xtype:'combo',
+                        xtype: 'combo',
                         store: Ext.create('Ext.data.Store', {
                             fields: ['name', 'value'],
-                            data : [
-                                {"name":"ev_seller", "value":"ev_seller"},
-                                {"name":"ev_buyer", "value":"ev_buyer"},
-                                {"name":"sb_seller", "value":"sb_seller"},
-                                {"name":"sb_buyer", "value":"sb_buyer"}
+                            data: [
+                                {"name": "ev_seller", "value": "ev_seller"},
+                                {"name": "ev_buyer", "value": "ev_buyer"},
+                                {"name": "sb_seller", "value": "sb_seller"},
+                                {"name": "sb_buyer", "value": "sb_buyer"}
                             ]
                         }),
                         querymode: 'local',
                         displayField: 'name',
                         valueField: 'value'
                     }
-                },{
+                }, {
                     text: 'latitude',
                     dataIndex: 'latitude'
-                },{
+                }, {
                     text: 'longitude',
                     dataIndex: 'longitude'
-                },{
+                }, {
                     //menuDisabled: true,
                     text: '更新或保存',
                     xtype: 'actioncolumn',
-                    align:'center',
+                    align: 'center',
                     items: [{
                         iconCls: 'iconfont-update',
                         tooltip: '提交修改',
@@ -452,38 +449,64 @@
                         tooltip: '删除记录',
                         handler: this.onDelete
                     }]
-                }]});
+                }]
+            });
             this.callParent();
             this.on('afterlayout', this.loadStore, this, {
                 delay: 1,
                 single: true
             });
         },
-        loadStore:function(){
+        loadStore: function () {
             this.getStore().load();
         },
-        onAddDepartment: function(){
-            var store = this.getStore();
-            if(store.getAt(0).data['id'] == 0)
-            //防止超过1次的新增导致grid选择的错误
-                alert('先把之前的save完成');
-            else{
-                var rec = Ext.create('department_model_admin', {
-                    id: 0,
-                    name: 'cotd' + parseInt(1000*Math.random()+1),
-                    location: 'asjcaubcaiaern',
-                    function: 'ev_seller',
-                    latitude: '0',
-                    longitude: '0'
+        onAddDepartment: function () {
+            var grid = this;
+            var win = Ext.getCmp('window_for_departadd');
+            if (win == undefined || win == null) {
+                win = Ext.create('Ext.window.Window', {
+                    title: 'Hello',
+                    width: 400,
+                    layout: 'fit',
+                    frame: false,
+                    border: false,
+                    id: 'window_for_departadd',
+                    items: [{
+                        xtype: 'adddepartform'
+                    }],
+                    buttons: [{
+                        text: '提交',
+                        handler: function () {
+                            var form = win.down('adddepartform');
+                            if (form.isValid()) {
+                                var data = form.getValues();
+                                console.log(data);
+                                var store = grid.getStore();
+                                var rec = Ext.create('department_model_admin', {
+                                    id: 0,
+                                    name: data.name,
+                                    location: data.location,
+                                    function: data.function,
+                                    latitude: data.latitude,
+                                    longitude: data.longitude
+                                });
+                                store.insert(0, rec);
+                                grid.cellEditing.startEditByPosition({
+                                    row: 0,
+                                    column: 1
+                                });
+                                win.hide();
+                            } else {
+                                alert('请完善表单');
+                            }
+                        }
+                    }]
                 });
-                store.insert(0, rec);
-                this.cellEditing.startEditByPosition({
-                    row : 0,
-                    column: 1
-                })
             }
+            win.show();
+
         },
-        onUpdate: function(grid, rowIndex){
+        onUpdate: function (grid, rowIndex) {
             var rec = grid.getStore().getAt(rowIndex);
             console.log(rec);
             Ext.Ajax.request({
@@ -500,7 +523,7 @@
                             buttons: Ext.Msg.OK
                         });
                         grid.getStore().reload();
-                    }else if(obj.result == 'INSERT_SUCCESS'){
+                    } else if (obj.result == 'INSERT_SUCCESS') {
                         Ext.Msg.show({
                             title: 'save',
                             msg: '保存完成',
@@ -508,7 +531,7 @@
                             buttons: Ext.Msg.OK
                         });
                         grid.getStore().reload();
-                    } else{
+                    } else {
                         Ext.Msg.show({msg: '失败', buttons: Ext.Msg.OK});
                     }
                 },
@@ -517,8 +540,87 @@
                 }
             });
         },
-        onDelete: function(grid, rowIndex){
+        onDelete: function (grid, rowIndex) {
 
+        }
+
+    });
+    Ext.define('add_depart_form', {
+        extend: 'Ext.form.Panel',
+        alias: 'widget.adddepartform',
+        layout: {
+            type: 'vbox',
+            align: 'center'
+        },
+        padding: 10,
+        border: false,
+        defaultType: 'textfield',
+        initComponent: function () {
+            var me = this;
+            Ext.apply(this, {
+                items: [{
+                    fieldLabel: '名称',
+                    name: 'name',
+                    allowBlank: false
+                }, {
+                    xtype: 'textarea',
+                    fieldLabel: '地址',
+                    name: 'location',
+                    grow: true,
+                    allowBlank: false
+                }, {
+                    xtype: 'combo',
+                    fieldLabel: '职能',
+                    name: 'function',
+                    store: Ext.create('Ext.data.Store', {
+                        fields: ['name', 'value'],
+                        data: [
+                            {"name": "ev_seller", "value": "ev_seller"},
+                            {"name": "ev_buyer", "value": "ev_buyer"},
+                            {"name": "sb_seller", "value": "sb_seller"},
+                            {"name": "sb_buyer", "value": "sb_buyer"}
+                        ]
+                    }),
+                    querymode: 'local',
+                    displayField: 'name',
+                    valueField: 'value',
+                    emptyText: 'ev_seller'
+                }, {
+                    fieldLabel: '纬度',
+                    name: 'latitude',
+                    allowBlank: false
+                }, {
+                    fieldLabel: '经度',
+                    name: 'longitude',
+                    allowBlank: false
+                }, {
+                    xtype: 'button',
+                    text: '根据名称在线获得经纬度',
+                    handler: function () {
+                        var url = 'http://api.map.baidu.com/geocoder/v2/?output=json&ak=8GER35MXbCi4MsTV40DGGbGa&address=';
+                        url = url + me.getValues().name;
+                        Ext.data.JsonP.request({
+                            url: url,
+                            success: function (response) {
+                                console.log(response);
+                                var location = response.result.location;
+                                if (response.status == 0) {
+                                    var record = Ext.create('department_model_admin');
+                                    record.data.name = me.getValues().name;
+                                    record.data.location = me.getValues().location;
+                                    record.data.function = me.getValues().function;
+                                    record.data.latitude = location.lat;
+                                    record.data.longitude = location.lng;
+                                    me.loadRecord(record);
+                                } else {
+                                    alert(response.msg);
+                                }
+                            }
+                        });
+                    }
+                }]
+            });
+            this.callParent();
         }
 
     });

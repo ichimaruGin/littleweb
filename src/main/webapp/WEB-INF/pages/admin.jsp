@@ -130,7 +130,10 @@
                 clicksToEdit:1
             });
             this.cellEditing.on('validateedit',function(editor,e){
-                e.record.commit();  //important,不加这句话会出现点着点着就点不动的bug
+                if(e.originalValue == e.value)
+                    return false;
+                else
+                    e.record.commit();  //important,不加这句话会出现点着点着就点不动的bug
             });
             Ext.apply(this, {
                 plugins: [this.cellEditing],
@@ -140,6 +143,7 @@
                 tbar: [
                     {xtype: 'button', scope:this, text: '新增', width: 100, handler: this.onAddUser},
                     {xtype: 'button', scope:this, text: '刷新', width: 100, handler: this.loadStore},
+                    {xtype: 'button', scope:this, text: '显示部门', width: 100, handler: this.showDepartment}
                 ],
                 store: Ext.create('user_store_admin', {}),
                 columns: [
@@ -147,19 +151,19 @@
                     {
                         text: '用户名',
                         dataIndex: 'username',  //不许修改
-                        sotable: false,
+                        sortable: false,
                         editor:{xtype: 'textfield'}
                     },
                     {
                         text: '密码',
                         dataIndex: 'password',
-                        sotable: false,
+                        sortable: false,
                         editor: {xtype: 'textfield'}
                     },
                     {
                         text: '级别',
                         dataIndex: 'userLevel',
-                        sotable: false,
+                        sortable: false,
                         editor: {
                             xtype:'combo',
                             store: Ext.create('Ext.data.Store', {
@@ -178,7 +182,7 @@
                     {
                         text: '部门',
                         dataIndex: 'departmentId',
-                        sotable: false,
+                        sortable: false,
                         width: 60,
                         editor: {xtype: 'textfield'}
                     },
@@ -299,6 +303,37 @@
                     alert('服务器错误:' + response.status);
                 }
             });
+        },
+        showDepartment:function(){
+            var store = this.getStore();
+            var grid = this;
+            var records = grid.getSelectionModel().getSelection();
+            if(records.length == 0)
+                Ext.Msg.show({title:'显示部门detail',msg:'请选中需要显示的那一行',icon: Ext.Msg.INFO, buttons: Ext.Msg.OK});
+            else{
+                console.log(records[0]);
+                var id = records[0].data.departmentId;
+                if(id == 0)
+                    alert('这是一个特别的身份，无所属部门');
+                else{
+                    Ext.Ajax.request({
+                        url: '<%=request.getContextPath()%>/admin/others/single/1/'+id,
+                        success:function(response){
+                            var json = Ext.JSON.decode(response.responseText);
+                            console.log(json);
+                            Ext.Msg.show({
+                                title:'部门信息',
+                                msg: '<h4>用户:'+records[0].data.username+'</h4>'+'部门名字:'+json.name+'<br/>部门地址:'+json.location,
+                                icon: Ext.Msg.INFO,
+                                buttons: Ext.Msg.OK
+                            });
+                        },
+                        failure:function(){
+                            alert('服务器响应失败');
+                        }
+                    });
+                }
+            }
         }
     });
     Ext.define('department_model_admin',{
@@ -340,7 +375,10 @@
                 clicksToEdit:1
             });
             this.cellEditing.on('validateedit',function(editor,e){
-                e.record.commit();
+                if(e.value == e.originalValue)
+                    return false;
+                else
+                    e.record.commit();
             });
             Ext.apply(this,{
                 plugins: [this.cellEditing],

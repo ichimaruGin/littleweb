@@ -22,7 +22,6 @@ import java.util.Map;
 
 /**
  * Created by YY_410 on 2015/3/26.
- *
  */
 @Controller
 @RequestMapping(value = {"/admin"})
@@ -36,19 +35,21 @@ public class AdminController {
 
     private static final int user_id = 0;
     private static final int department_id = 1;
+
     /**
-     *obj_id 这个值代表需要修改的对象 比如User 为 0, department_id 为 1
+     * obj_id 这个值代表需要修改的对象 比如User 为 0, department_id 为 1
      */
     @RequestMapping(value = "/query/{obj_id}", method = RequestMethod.GET)
-    public @ResponseBody
-    List getAllRecords(@PathVariable int obj_id,HttpSession session) {
-        LoginStatus status = (LoginStatus)session.getAttribute("login_status");
-        if(status == null || !status.getAlive())
+    public
+    @ResponseBody
+    List getAllRecords(@PathVariable int obj_id, HttpSession session) {
+        LoginStatus status = (LoginStatus) session.getAttribute("login_status");
+        if (status == null || !status.getAlive())
             return null;
         Class clazz = null;
-        if(obj_id == user_id)
+        if (obj_id == user_id)
             clazz = User.class;
-        else if(obj_id == department_id)
+        else if (obj_id == department_id)
             clazz = Department.class;
         else
             ;
@@ -57,18 +58,19 @@ public class AdminController {
     }
 
     /**
-     *
-     * **/
-    @RequestMapping(value={"/update/{obj_id}"}, method = RequestMethod.POST)
-    public @ResponseBody
+     * *
+     */
+    @RequestMapping(value = {"/update/{obj_id}"}, method = RequestMethod.POST)
+    public
+    @ResponseBody
     AjaxResult updateRecord(@PathVariable int obj_id, HttpServletRequest request, HttpSession session) throws UnsupportedEncodingException {
-        LoginStatus status = (LoginStatus)session.getAttribute("login_status");
-        if(status == null || !status.getAlive())
+        LoginStatus status = (LoginStatus) session.getAttribute("login_status");
+        if (status == null || !status.getAlive())
             return null;
         request.setCharacterEncoding("utf-8");
         AjaxResult ajaxResult = new AjaxResult(false);
-        try{
-            switch(obj_id){
+        try {
+            switch (obj_id) {
                 //User更新请求
                 case user_id:
                     User user = new User();
@@ -91,22 +93,23 @@ public class AdminController {
                     ajaxResult.setResult(CRUDEvent.getNameByValue(adminService.updateObject(depart)));
                     break;
             }
-        }catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return ajaxResult;
     }
 
-    @RequestMapping(value={"/delete/{obj_id}"},method = RequestMethod.POST)
-    public @ResponseBody
+    @RequestMapping(value = {"/delete/{obj_id}"}, method = RequestMethod.POST)
+    public
+    @ResponseBody
     AjaxResult deleteRecord(@PathVariable int obj_id, HttpServletRequest request, HttpSession session) throws UnsupportedEncodingException {
-        LoginStatus status = (LoginStatus)session.getAttribute("login_status");
-        if(status == null || !status.getAlive())
+        LoginStatus status = (LoginStatus) session.getAttribute("login_status");
+        if (status == null || !status.getAlive())
             return null;
         request.setCharacterEncoding("utf-8");
         AjaxResult ajaxResult = new AjaxResult(false);
-        try{
-            switch(obj_id){
+        try {
+            switch (obj_id) {
                 case user_id:
                     int id = Integer.parseInt(request.getParameter("id"));
                     String res = CRUDEvent.getNameByValue(adminService.deleteUserById(id));
@@ -116,9 +119,27 @@ public class AdminController {
                 case department_id:
                     break;
             }
-        }catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return ajaxResult;
     }
- }
+
+    //获得单个对象
+    @RequestMapping(value = {"/others/single/{obj_id}/{id}"}, method = RequestMethod.GET)
+    public
+    @ResponseBody
+    Object getDepartmentName(@PathVariable Integer id, @PathVariable Integer obj_id, HttpSession session) {
+        LoginStatus status = (LoginStatus) session.getAttribute("login_status");
+        if (status == null || !status.getAlive())
+            return null;
+        else {
+            Class clazz = null;
+            switch (obj_id){
+                case 0: clazz = User.class;break;
+                case 1: clazz = Department.class;break;
+            }
+            return commonDao.getSingleObjectById(clazz, id);
+        }
+    }
+}

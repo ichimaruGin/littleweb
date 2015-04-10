@@ -12,12 +12,21 @@
     <title>管理中心</title>
     <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/resources/ext-theme-neptune-all.css">
     <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/resources/icon.css">
+    <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/resources/example.css">
     <link rel="shortcut icon" href="<%=request.getContextPath()%>/resources/icons/favicon.ico">
+    <script type="text/javascript" src="<%=request.getContextPath()%>/app/amap.js"></script>
     <script type="text/javascript" src="<%=request.getContextPath()%>/extjs/ext-all-debug.js"></script>
     <script type="text/javascript" src="<%=request.getContextPath()%>/extjs/ext-lang-zh_CN.js"></script>
+    <script type="text/javascript" src="<%=request.getContextPath()%>/extjs/example.js"></script>
 </head>
-<body>
+<body onload="getBasicParam()" >
 <script>
+    var deviceWidth;
+    var deviceHeight;
+    function getBasicParam(){
+        deviceHeight = document.body.clientHeight;
+        deviceWidth = document.body.clientWidth;
+    };
     Ext.onReady(function () {
         Ext.tip.QuickTipManager.init();
         var naviPanel = Ext.create('Ext.panel.Panel', {
@@ -121,10 +130,11 @@
         title: '用户信息管理',
         border: false,
         closable: true,
-        viewConfig: {
-            stripeRow: true,
-            enableTextSelection: true
-        },
+        //下面这段话最好别加
+//        viewConfig: {
+//            stripeRow: true,
+//            enableTextSelection: true
+//        },
         initComponent: function () {
             this.cellEditing = new Ext.grid.plugin.CellEditing({
                 clicksToEdit: 2
@@ -152,13 +162,13 @@
                         text: '用户名',
                         dataIndex: 'username',  //不许修改
                         sortable: false,
-                        editor: {xtype: 'textfield'}
+                        editor: {xtype: 'textfield', allowBlank: false, blankText: '用户名不能为空'}
                     },
                     {
                         text: '密码',
                         dataIndex: 'password',
                         sortable: false,
-                        editor: {xtype: 'textfield'}
+                        editor: {xtype: 'textfield', minLength: 6, minLengthText:'密码至少6位'}
                     },
                     {
                         text: '级别',
@@ -363,10 +373,6 @@
         title: '企业信息管理',
         border: false,
         closable: true,
-        viewConfig: {
-            stripeRow: true,
-            enableTextSelection: true
-        },
         initComponent: function () {
             this.cellEditing = new Ext.grid.plugin.CellEditing({
                 clicksToEdit: 1
@@ -392,7 +398,7 @@
                     dataIndex: 'id'
                 }, {
                     text: '企业名',
-                    dataIndex: 'name',  //不许修改
+                    dataIndex: 'name',
                     sotable: false,
                     editor: {xtype: 'textfield'}
                 }, {
@@ -593,30 +599,50 @@
                     fieldLabel: '经度',
                     name: 'longitude',
                     allowBlank: false
-                }, {
-                    xtype: 'button',
-                    text: '根据名称在线获得经纬度',
-                    handler: function () {
-                        var url = 'http://api.map.baidu.com/geocoder/v2/?output=json&ak=8GER35MXbCi4MsTV40DGGbGa&address=';
-                        url = url + me.getValues().name;
-                        Ext.data.JsonP.request({
-                            url: url,
-                            success: function (response) {
-                                console.log(response);
-                                var location = response.result.location;
-                                if (response.status == 0) {
-                                    var record = Ext.create('department_model_admin');
-                                    record.data.name = me.getValues().name;
-                                    record.data.location = me.getValues().location;
-                                    record.data.function = me.getValues().function;
-                                    record.data.latitude = location.lat;
-                                    record.data.longitude = location.lng;
-                                    me.loadRecord(record);
-                                } else {
-                                    alert(response.msg);
-                                }
-                            }
-                        });
+                },
+//                    {
+//                    xtype: 'button',
+//                    text: '根据名称在线获得经纬度',
+//                    handler: function () {
+//                        var url = 'http://api.map.baidu.com/geocoder/v2/?output=json&ak=8GER35MXbCi4MsTV40DGGbGa&address=';
+//                        url = url + me.getValues().name;
+//                        Ext.data.JsonP.request({
+//                            url: url,
+//                            timeout: 3000,
+//                            success: function (response) {
+//                                console.log(response);
+//                                var location = response.result.location;
+//                                if (response.status == 0) {
+//                                    var record = Ext.create('department_model_admin');
+//                                    record.data.name = me.getValues().name;
+//                                    record.data.location = me.getValues().location;
+//                                    record.data.function = me.getValues().function;
+//                                    record.data.latitude = location.lat;
+//                                    record.data.longitude = location.lng;
+//                                    me.loadRecord(record);
+//                                } else {
+//                                    alert(response.msg);
+//                                }
+//                            },
+//                            failure: function(res){
+//                                console.log(res);
+//                            }
+//                        });
+//                    }
+//                },
+                    {
+                    xtype:'button',
+                    text:'加载地图', width:'50%',
+                    handler:function(){
+                        var win = Ext.ComponentQuery.query('amapforsearch')[0];
+                        if(win == undefined){
+                            win = Ext.create('AmapForSearch',{title:'地图搜索',width:800,height:450});
+                            win.on('afterrender',function(){
+                                console.log('win afterrender');
+                                AMap.asynLoadMap(AMap.key);
+                            });
+                        }
+                        win.showAt((deviceWidth-800)/2,0);
                     }
                 }]
             });
@@ -624,6 +650,30 @@
         }
 
     });
+    Ext.define('AmapForSearch',{
+        extend: 'Ext.window.Window',
+        alias: 'widget.amapforsearch',
+        layout:{
+            type:'vbox',
+            align:'stretch'
+        },
+        border:false,
+        closeAction:'hide',
+        //modal:true,
+        initComponent:function(){
+            Ext.apply(this,{
+                items:[{
+                    id:'amap_search', width:400, height:390
+                },{
+                    html: '<form id="search_form">搜索:<input type="text" id="suggestId" size="20" style="width:40%" title="搜索框"/></form>',
+                    border:false
+                }]
+            });
+            this.callParent();
+        }
+    });
+
+
 </script>
 </body>
 <style type="text/css">

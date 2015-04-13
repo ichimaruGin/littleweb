@@ -63,8 +63,8 @@
 	<!-- AOP  -->
 	<aop:aspectj-autoproxy proxy-target-class="true"/>
 	<aop:config>
-		<aop:advisor advice-ref="transactionAdvice" pointcut="execution(* com.iwebirth.db.service.*.*(..))"/>
-        <aop:advisor advice-ref="transactionAdvice" pointcut="execution(* com.iwebirth.db.service.common.*.*(..))"/>
+		<aop:advisor advice-ref="transactionAdvice" pointcut="execution(* com.iwebirth.db.service..*.*(..))"/>
+        <!--<aop:advisor advice-ref="transactionAdvice" pointcut="execution(* com.iwebirth.db.service.common.*.*(..))"/>-->
 	</aop:config>
 	
 	<!-- 根据Annotation来生成事务代理  要使用@Transactional必须要下面的声明-->

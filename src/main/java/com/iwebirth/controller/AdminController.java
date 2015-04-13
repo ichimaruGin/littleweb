@@ -4,6 +4,7 @@ import com.iwebirth.controller.responsemodel.AjaxResult;
 import com.iwebirth.controller.responsemodel.LoginStatus;
 import com.iwebirth.db.model.Department;
 import com.iwebirth.db.model.User;
+import com.iwebirth.db.model.Vehicle;
 import com.iwebirth.db.service.AdminService;
 import com.iwebirth.db.service.CRUDEvent;
 import com.iwebirth.db.service.common.CommonDao;
@@ -35,7 +36,7 @@ public class AdminController {
 
     private static final int user_id = 0;
     private static final int department_id = 1;
-
+    private static final int vehicle_id = 2;
     /**
      * obj_id 这个值代表需要修改的对象 比如User 为 0, department_id 为 1
      */
@@ -47,12 +48,11 @@ public class AdminController {
         if (status == null || !status.getAlive())
             return null;
         Class clazz = null;
-        if (obj_id == user_id)
-            clazz = User.class;
-        else if (obj_id == department_id)
-            clazz = Department.class;
-        else
-            ;
+        switch(obj_id){
+            case user_id: clazz = User.class;break;
+            case department_id: clazz = Department.class;break;
+            case vehicle_id: clazz = Vehicle.class;break;
+        }
         List list = commonDao.getAllObject(clazz);
         return list;
     }
@@ -91,6 +91,19 @@ public class AdminController {
                     depart.setLatitude(request.getParameter("latitude"));
                     depart.setLongitude(request.getParameter("longitude"));
                     ajaxResult.setResult(CRUDEvent.getNameByValue(adminService.updateObject(depart)));
+                    break;
+                case vehicle_id:
+                    Vehicle vehicle = new Vehicle();
+                    vehicle.setId(Integer.parseInt(request.getParameter("id")));
+                    vehicle.setTerminalId(request.getParameter("terminalId"));
+                    vehicle.setType(request.getParameter("type"));
+                    vehicle.setTerminalLicense(request.getParameter("terminalLicense"));
+                    vehicle.setCurrentStatus(request.getParameter("currentStatus"));
+                    vehicle.setBelongId(Integer.parseInt(request.getParameter("belongId")));
+                    vehicle.setOriginId(Integer.parseInt(request.getParameter("originId")));
+                    vehicle.setRecentRentId(Integer.parseInt(request.getParameter("recentRentId")));
+                    vehicle.setRecentSellId(Integer.parseInt(request.getParameter("recentSellId")));
+                    ajaxResult.setResult(CRUDEvent.getNameByValue(adminService.updateObject(vehicle)));
                     break;
             }
         } catch (Exception e) {
@@ -142,4 +155,5 @@ public class AdminController {
             return commonDao.getSingleObjectById(clazz, id);
         }
     }
+
 }

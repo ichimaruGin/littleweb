@@ -26,6 +26,7 @@
     function getBasicParam(){
         deviceHeight = document.body.clientHeight;
         deviceWidth = document.body.clientWidth;
+        Ext.example.msg('管理员界面','',1);
     };
     Ext.onReady(function () {
         Ext.tip.QuickTipManager.init();
@@ -63,6 +64,20 @@
                     var tab = tabPanel.down('departmentgrid');
                     if (!tab) {
                         tab = Ext.create('department_grid_admin', {
+                            closeAction: 'destroy'
+                        });
+                        tabPanel.add(tab);
+                        tabPanel.setActiveTab(tab);
+                    } else {
+                        tabPanel.setActiveTab(tab);
+                    }
+                }
+            }, {
+                text: '车辆信息管理',
+                handler:function(){
+                    var tab = tabPanel.down('vehiclegrid');
+                    if (!tab) {
+                        tab = Ext.create('vehicle_grid_admin', {
                             closeAction: 'destroy'
                         });
                         tabPanel.add(tab);
@@ -420,9 +435,9 @@
                             fields: ['name', 'value'],
                             data: [
                                 {"name": "ev_seller", "value": "ev_seller"},
-                                {"name": "ev_buyer", "value": "ev_buyer"},
+                                {"name": "ev_manager", "value": "ev_manager"},
                                 {"name": "sb_seller", "value": "sb_seller"},
-                                {"name": "sb_buyer", "value": "sb_buyer"}
+                                {"name": "sb_manager", "value": "sb_manager"}
                             ]
                         }),
                         querymode: 'local',
@@ -673,7 +688,235 @@
         }
     });
 
-
+    Ext.define('vehicle_model_admin', {
+        extend: 'Ext.data.Model',
+        fields: [
+            {name: 'terminalId', type: 'string'},
+            {name: 'type', type: 'string'},
+            {name: 'terminalLicense', type: 'string'},
+            {name: 'belongId', type: 'int'},
+            {name: 'originId', type: 'int'},
+            {name: 'currentStatus', type: 'string'},
+            {name: 'recentRentId', type: 'int'},
+            {name: 'recentSellId', type: 'int'}]
+    });
+    Ext.define('vehicle_store_admin', {
+        extend: 'Ext.data.Store',
+        model: 'vehicle_model_admin',
+        proxy: {
+            type: 'ajax',
+            url: '<%=request.getContextPath()%>/admin/query/2',
+            reader: {
+                type: 'json'
+            }
+        }
+    });
+    Ext.define('vehicle_grid_admin', {
+        extend: 'Ext.grid.Panel',
+        alias: 'widget.vehiclegrid',
+        requires: [
+            'Ext.grid.column.Action'
+        ],
+        height: 400,
+        title: '车辆信息管理',
+        border: false,
+        closable: true,
+        initComponent: function () {
+            this.cellEditing = new Ext.grid.plugin.CellEditing({
+                clicksToEdit: 1
+            });
+            this.cellEditing.on('validateedit', function (editor, e) {
+                if (e.value == e.originalValue)
+                    return false;
+                else
+                    e.record.commit();
+            });
+            Ext.apply(this, {
+                plugins: [this.cellEditing],
+                selModel: {
+                    selType: 'cellmodel'
+                },
+                tbar: [
+                    {xtype: 'button', scope: this, text: '新增', width: 100, handler: this.onAddVehicle},
+                    {xtype: 'button', scope: this, text: '刷新', width: 100, handler: this.loadStore}
+                ],
+                store: Ext.create('vehicle_store_admin', {}),
+                columns: [{
+                    text: '序号',
+                    dataIndex: 'id'
+                }, {
+                    text: '终端号',
+                    dataIndex: 'terminalId',
+                    sotable: false,
+                    editor: {xtype: 'textfield'}
+                }, {
+                    text: '类型',
+                    dataIndex: 'type',
+                    sotable: false,
+                    sotable: false,
+                    editor: {
+                        xtype: 'combo',
+                        store:Ext.create('Ext.data.Store',{
+                            fields:['name','value'],
+                            data:[{
+                                'name':'A','value':'A'
+                            },{
+                                'name':'B','value':'B'
+                            },{
+                                'name':'C','value':'C'
+                            },{
+                                'name':'D','value':'D'
+                            }]
+                        }),
+                        querymode:'local',
+                        displayField: 'name',
+                        valueField: 'value'
+                    }
+                },{
+                    text: '牌照',
+                    dataIndex: 'terminalLicense',
+                    sotable: false,
+                    editor: {xtype: 'textfield'}
+                },{
+                    text: '当前归属',
+                    dataIndex: 'belongId',
+                    sotable: false,
+                    editor: {
+                        xtype: 'departcombo'
+                    }
+                },{
+                    text: '最初归属',
+                    dataIndex: 'originId',
+                    sotable: false,
+                    editor: {
+                        xtype: 'departcombo'
+                    }
+                },{
+                    text: '当前状态',
+                    dataIndex: 'currentStatus',
+                    sotable: false,
+                    editor: {
+                        xtype: 'combo',
+                        store:Ext.create('Ext.data.Store',{
+                            fields:['name','value'],
+                            data:[{
+                                'name':'无状态','value':'none'
+                            },{
+                                'name':'租赁','value':'onRent'
+                            },{
+                                'name':'出售','value':'onSell'
+                            }]
+                        }),
+                        querymode:'local',
+                        displayField: 'name',
+                        valueField: 'value'
+                    }
+                },{
+                    text:'租赁信息',
+                    dataIndex:'recentRentId',
+                    sortabl: false,
+                    editor:{xtype: 'textfield'}
+                },{
+                    text:'出售信息',
+                    dataIndex:'recentSellId',
+                    sortabl: false,
+                    editor:{xtype: 'textfield'}
+                },{
+                    //menuDisabled: true,
+                    text: '更新或保存',
+                    xtype: 'actioncolumn',
+                    align: 'center',
+                    items: [{
+                        iconCls: 'iconfont-update',
+                        tooltip: '提交修改',
+                        handler: this.onUpdate
+                    }]
+                }]
+            });
+            this.callParent();
+            this.on('afterlayout', this.loadStore, this, {
+                delay: 1,
+                single: true
+            });
+        },
+        loadStore: function () {
+            this.getStore().load();
+        },
+        onAddVehicle: function () {
+            var store = this.getStore();
+            if(store.getAt(0).id == 0){
+                alert('请先完成当前的新增');
+            }else{
+                var record = Ext.create('vehicle_model_admin',{
+                    id: 0,
+                    terminalId: '终端号',
+                    type: '',
+                    terminalLicense: '',
+                    belongId: 0,
+                    originId: 0,
+                    currentStatus: 'none',
+                    recentRentId: 0,
+                    recentSellId: 0
+                });
+                store.insert(0,record);
+                this.cellEditing.startEditByPosition({
+                    row: 0,
+                    column: 1
+                })
+            }
+        },
+        onUpdate: function (grid, rowIndex) {
+            var rec = grid.getStore().getAt(rowIndex);
+            console.log(rec);
+            Ext.Ajax.request({
+                url: '<%=request.getContextPath()%>/admin/update/2',
+                params: rec.data,
+                method: 'POST',
+                success: function (response) {
+                    var obj = Ext.decode(response.responseText);
+                    if (obj.result == 'UPDATE_SUCCESS') {
+                        Ext.Msg.show({
+                            title: 'update',
+                            msg: '更新完成',
+                            icon: Ext.Msg.INFO,
+                            buttons: Ext.Msg.OK
+                        });
+                        grid.getStore().reload();
+                    } else if (obj.result == 'INSERT_SUCCESS') {
+                        Ext.Msg.show({
+                            title: 'save',
+                            msg: '保存完成',
+                            icon: Ext.Msg.INFO,
+                            buttons: Ext.Msg.OK
+                        });
+                        grid.getStore().reload();
+                    } else {
+                        Ext.Msg.show({title:'保存或更新',msg: '失败',icon: Ext.Msg.ERROR, buttons: Ext.Msg.OK});
+                    }
+                },
+                failure: function (response) {
+                    alert('服务器错误:' + response.status);
+                }
+            });
+        }
+    });
+    Ext.define('departmentCombo',{
+        extend: 'Ext.form.field.ComboBox',
+        alias: 'widget.departcombo',
+        store: Ext.create('Ext.data.Store', {
+            fields: ['name', 'id'],
+            proxy:{
+                type:'ajax',
+                //get all depart objects and only use 'id'&'name'
+                url: '<%=request.getContextPath()%>/admin/query/1',
+                reader:{
+                    type:'json'
+                }
+            }
+        }),
+        displayField: 'name',
+        valueField: 'id'
+    })
 </script>
 </body>
 <style type="text/css">

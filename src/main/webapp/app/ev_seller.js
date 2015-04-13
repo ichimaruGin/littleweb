@@ -5,7 +5,7 @@ Ext.application({
 	requires:['BS.view.Viewport'],
 	views:[],
 	stores:[],
-	controllers:[],
+    controllers:['BS.controller.Main'],
 	launch:function(){
 		
 	}

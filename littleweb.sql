@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.6.14, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 5.6.10, for Win64 (x86_64)
 --
 -- Host: localhost    Database: littleweb
 -- ------------------------------------------------------
--- Server version	5.6.14
+-- Server version	5.6.10
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -31,7 +31,7 @@ CREATE TABLE `department` (
   `function` varchar(20) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `UK_departmentname` (`name`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -40,7 +40,7 @@ CREATE TABLE `department` (
 
 LOCK TABLES `department` WRITE;
 /*!40000 ALTER TABLE `department` DISABLE KEYS */;
-INSERT INTO `department` VALUES (1,'co1','aclbaysbliq','120.123456','30.21421','ev_seller'),(2,'co2','aclbaysbliq','120.123456','30.21421','ev_seller');
+INSERT INTO `department` VALUES (1,'co1','aclbaysbliq','120.123456','30.21421','ev_seller'),(2,'co2','aclbaysbliq','120.123456','30.21421','ev_seller'),(3,'co3','asjcaubcaiaern','0','0','ev_seller'),(4,'浙江菜鸟集团','asjcaubcaiaern','0','0','ev_buyer'),(5,'绍兴纺机集团','绍兴市绍兴县绍兴纺机集团','30.094546','120.536599','ev_buyer');
 /*!40000 ALTER TABLE `department` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -166,7 +166,7 @@ CREATE TABLE `user` (
   `is_valid` tinyint(1) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `UK_j8pqu7twm7ekoe3orxctxr9f4` (`username`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -175,7 +175,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (1,'ichimaruGin','1234rewQ','admin',0,1427358140,1),(2,'jason','1234田园6','personal',0,1427358140,0),(3,'tiantian','1234563654756','personal',0,1427457899,0),(4,'user三大神','pass','admin',0,1427872097,0),(6,'user','pass','personal',0,1427872188,0),(7,'userds','pass','department',0,1427872625,0),(8,'user1','pass','department',0,1427873200,0),(9,'user2','pass','department',0,1427873206,0),(10,'user512','pass','personal',0,1427873656,1),(11,'user6','pass','personal',0,1427873660,1);
+INSERT INTO `user` VALUES (1,'ichimaruGin','1234rewQ','admin',0,1427358140,1),(2,'ev_seller','123456','department',1,1427358140,1),(3,'tiantian','1234563654756','personal',0,1427457899,0),(4,'user三大神','pass','personal',1,1427872097,0),(6,'user','pass','personal',0,1427872188,0),(7,'userds','pass','department',0,1427872625,0),(8,'user1','pass','department',0,1427873200,0),(9,'user2','pass','department',0,1427873206,0),(10,'user512','pass','personal',0,1427873656,1),(11,'user6','pass','personal',0,1427873660,1),(12,'user844','pass','personal',0,1428031490,0),(13,'大神大神','pass12','personal',0,1428497342,0),(14,'user980','pass','personal',0,1428903516,1);
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -199,7 +199,7 @@ CREATE TABLE `vehicle` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `UK_4dudpbo4yrv68hqslmkmc8ss7` (`terminal_id`),
   UNIQUE KEY `UK_2uj7tk59hctnh571mxyueq35a` (`terminal_license`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -208,6 +208,7 @@ CREATE TABLE `vehicle` (
 
 LOCK TABLES `vehicle` WRITE;
 /*!40000 ALTER TABLE `vehicle` DISABLE KEYS */;
+INSERT INTO `vehicle` VALUES (1,'zj05710000','B','浙A08080',1,1,'none',0,0),(2,'zj05710001','A','浙A01010',2,2,'none',0,0);
 /*!40000 ALTER TABLE `vehicle` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -220,4 +221,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-04-01 22:38:12
+-- Dump completed on 2015-04-13 16:27:30

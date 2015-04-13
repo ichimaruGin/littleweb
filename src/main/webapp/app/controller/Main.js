@@ -1,21 +1,14 @@
-var clientWidth;
-var clientHeight;
-Ext.define('SXFJ.controller.Main', {
+Ext.define('BS.controller.Main', {
     extend: 'Ext.app.Controller',
-
 	//refs中定义的内容，对于Ext.window.Window这种没有直接渲染的组件，需要自己先new一个
 	init:function(){
 		this.control({
-			
+
 		});
 	},
 	onLaunch:function(){
-		document.getElementById('loading_id').parentNode.removeChild(document.getElementById('loading_id'));//删除载入界面的div
 		Ext.tip.QuickTipManager.init(); //初始化quicktip
 		Ext.example.msg('欢迎','',2);
-//		var regex = new RegExp("^(AI|RA)\\d{2}$");
-//		console.log(regex.test('AI000'));
-//		console.log(regex.test('RA00'));
 	},
 	getXY:function(){
 		document.write(

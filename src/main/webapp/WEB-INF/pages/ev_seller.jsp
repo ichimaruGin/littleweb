@@ -7,6 +7,7 @@
 
 <link rel="shortcut icon" href="resources/icons/favicon.ico" />
 <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/icon.css">
+<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/example.css">
 <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/ext-theme-neptune-all.css">
 <script>
 var baseURL = '<%=request.getContextPath()%>';
@@ -14,6 +15,7 @@ var user_global = '${username}';
 </script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/extjs/ext-all-debug.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/extjs/ext-lang-zh_CN.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath()%>/extjs/example.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/app/ev_seller.js"></script>
 <title>index</title>
 </head>

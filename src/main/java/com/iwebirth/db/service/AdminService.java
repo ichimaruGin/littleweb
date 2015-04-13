@@ -2,6 +2,7 @@ package com.iwebirth.db.service;
 
 import com.iwebirth.db.model.Department;
 import com.iwebirth.db.model.User;
+import com.iwebirth.db.model.Vehicle;
 import com.iwebirth.db.service.common.CommonDao;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -63,6 +64,23 @@ public class AdminService {
                         dDepart.setLatitude(department.getLatitude());
                         dDepart.setLongitude(department.getLongitude());
                     }
+                }
+            }else if(clazz == Vehicle.class){
+                System.out.println("vehicle update or save");
+                Vehicle vehicle = (Vehicle)obj;
+                Integer id = vehicle.getId();
+                if(id == 0){
+                    res = commonDao.insertSingleObject(vehicle);
+                }else{
+                    Vehicle dVehicle = (Vehicle)commonDao.getSingleObjectById(clazz,id);
+                    dVehicle.setTerminalId(vehicle.getTerminalId());
+                    dVehicle.setType(vehicle.getType());
+                    dVehicle.setTerminalLicense(vehicle.getTerminalLicense());
+                    dVehicle.setBelongId(vehicle.getBelongId());
+                    dVehicle.setOriginId(vehicle.getOriginId());
+                    dVehicle.setCurrentStatus(vehicle.getCurrentStatus());
+                    dVehicle.setRecentRentId(vehicle.getRecentRentId());
+                    dVehicle.setRecentSellId(vehicle.getRecentSellId());
                 }
             }
         }catch (Exception e) {

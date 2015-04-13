@@ -3,8 +3,7 @@ Ext.define('BS.view.Main',{
 	alias: 'widget.main',
 	requires:[
 	     'BS.view.Logo',
-	     'BS.view.NaviPanel',
-	     'BS.view.EVGridTree'
+	     'BS.view.NaviPanel'
 	],
 	layout:'border',
     border:false,
@@ -27,7 +26,7 @@ Ext.define('BS.view.Main',{
         style:'border-style:solid;border-width: 0px 1px 0px 0px;',
         layout:'fit',
     	items:[{
-    		xtype:'evgridtree',
+    		xtype:'panel',
     		title:'车辆信息'
     	}]
     }]

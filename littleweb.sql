@@ -40,7 +40,7 @@ CREATE TABLE `department` (
 
 LOCK TABLES `department` WRITE;
 /*!40000 ALTER TABLE `department` DISABLE KEYS */;
-INSERT INTO `department` VALUES (1,'co1','aclbaysbliq','120.123456','30.21421','ev_seller'),(2,'co2','aclbaysbliq','120.123456','30.21421','ev_seller'),(3,'co3','asjcaubcaiaern','0','0','ev_seller'),(4,'浙江菜鸟集团','asjcaubcaiaern','0','0','ev_buyer'),(5,'绍兴纺机集团','绍兴市绍兴县绍兴纺机集团','30.094546','120.536599','ev_buyer');
+INSERT INTO `department` VALUES (1,'co1','aclbaysbliq','120.123456','30.21421','ev_seller'),(2,'co2','aclbaysbliq','120.123456','30.21421','ev_seller'),(3,'co3','asjcaubcaiaern','0','0','ev_seller'),(4,'浙江菜鸟集团','asjcaubcaiaern','0','0','ev_manager'),(5,'绍兴纺机集团','绍兴市绍兴县绍兴纺机集团','30.094546','120.536599','ev_manager');
 /*!40000 ALTER TABLE `department` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -199,7 +199,7 @@ CREATE TABLE `vehicle` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `UK_4dudpbo4yrv68hqslmkmc8ss7` (`terminal_id`),
   UNIQUE KEY `UK_2uj7tk59hctnh571mxyueq35a` (`terminal_license`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -208,7 +208,7 @@ CREATE TABLE `vehicle` (
 
 LOCK TABLES `vehicle` WRITE;
 /*!40000 ALTER TABLE `vehicle` DISABLE KEYS */;
-INSERT INTO `vehicle` VALUES (1,'zj05710000','B','浙A08080',1,1,'none',0,0),(2,'zj05710001','A','浙A01010',2,2,'none',0,0);
+INSERT INTO `vehicle` VALUES (1,'zj05710000','B','浙A08080',1,1,'none',0,0),(2,'zj05710001','A','浙A01010',2,2,'none',0,0),(3,'zj05710002','A','浙A00001',1,1,'none',0,0),(4,'zj05710003','A','浙A00002',1,1,'none',0,0),(5,'zj05710004','A','浙A00003',1,1,'none',0,0),(6,'zj05710005','A','浙A00004',1,1,'none',0,0),(7,'zj05710006','A','浙A00005',1,1,'none',0,0);
 /*!40000 ALTER TABLE `vehicle` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -221,4 +221,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-04-13 16:27:30
+-- Dump completed on 2015-04-13 22:22:39

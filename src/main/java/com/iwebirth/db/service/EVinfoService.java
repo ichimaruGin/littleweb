@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 public class EVinfoService {
 	@Autowired
 	SessionFactory sf;
-	
+
 	//对于Evinfo的department属性，认为它已经存在
 	//合理的操作是先从Department表中查到一个对象，然后把这个department放到ev中
 	//不要通过此操作同时插入department

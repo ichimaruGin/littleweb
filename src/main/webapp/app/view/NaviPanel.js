@@ -2,6 +2,9 @@ Ext.define('BS.view.NaviPanel',{
 	extend:'Ext.panel.Panel',
 	alias:'widget.navipanel',
 	width:300,
+    requires:[
+        'BS.view.VehicleTree'
+    ],
 	initComponent:function(){
 		Ext.apply(this,{			
 			layout:{
@@ -14,12 +17,12 @@ Ext.define('BS.view.NaviPanel',{
 			},
 			items: [{
 			    title:'车辆查询',
-			    xtype: 'panel',
-			    html:'一些话'
+			    xtype: 'vehicletree'
 			},{
 			    title: '管理区',
 			    xtype: 'panel',
-			    html:'一些话'
+			    html:'一些话',
+                padding:10
 			}]	
 		});
 		this.callParent();
